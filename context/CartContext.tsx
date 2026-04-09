@@ -54,18 +54,28 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [items, user, isInitialized]);
 
+  const parsePrice = (price: any): number => {
+    if (typeof price === 'number') return price;
+    if (!price) return 0;
+    // Strip everything except digits to handle both commas and dots as separators
+    const clean = String(price).replace(/[^\d]/g, '');
+    return parseInt(clean, 10) || 0;
+  };
+
   const addToCart = (product: any) => {
-    setItems((prev) => {
-      const existingItem = prev.find((item) => item.id === product.id);
-      if (existingItem) {
-        toast.info(`Increased quantity of ${product.name}`);
-        return prev.map((item) =>
+    const isExisting = items.some((item) => item.id === product.id);
+    
+    if (isExisting) {
+      toast.info(`Increased quantity of ${product.name}`);
+      setItems((prev) =>
+        prev.map((item) =>
           item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-        );
-      }
+        )
+      );
+    } else {
       toast.success(`${product.name} added to cart!`);
-      return [...prev, { ...product, quantity: 1 }];
-    });
+      setItems((prev) => [...prev, { ...product, quantity: 1, price: String(product.price) }]);
+    }
   };
 
   const removeFromCart = (id: string | number) => {
@@ -91,7 +101,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   
   const subtotal = items.reduce((sum, item) => {
-    const priceValue = parseFloat(item.price.replace(/[^\d.]/g, '')) || 0;
+    const priceValue = parsePrice(item.price);
     return sum + priceValue * item.quantity;
   }, 0);
 

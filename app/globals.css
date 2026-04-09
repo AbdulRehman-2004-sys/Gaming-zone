@@ -189,9 +189,23 @@ body {
 
 :root {
   --primary-color: #facc15;
-  --toastify-color-success: #F4CC12 !important;
-  --toastify-color-progress-success: #F4CC12 !important;
-  --toastify-icon-color-success: #fff !important;
+  
+  /* Toastify Customization */
+  --toastify-color-success: #facc15 !important;
+  --toastify-color-progress-success: #facc15 !important;
+  --toastify-icon-color-success: #000 !important;
+  
+  --toastify-color-info: #facc15 !important;
+  --toastify-color-progress-info: #facc15 !important;
+  --toastify-icon-color-info: #facc15 !important;
+  
+  --toastify-color-warning: #facc15 !important;
+  --toastify-color-progress-warning: #facc15 !important;
+  --toastify-icon-color-warning: #facc15 !important;
+
+  --toastify-color-error: #ef4444 !important;
+  --toastify-color-progress-error: #ef4444 !important;
+  --toastify-icon-color-error: #ef4444 !important;
 }
 
 @layer base {
