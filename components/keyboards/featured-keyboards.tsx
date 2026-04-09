@@ -20,7 +20,7 @@ interface FeaturedKeyboard {
 
 const featuredKeyboards: FeaturedKeyboard[] = [
   {
-    id: 1,
+    id: '1',
     name: 'Gaming Keyboard Pro Max',
     description: 'The ultimate gaming keyboard with advanced features and customizable switches. Built for esports champions and serious gamers who demand precision and speed.',
     image: '/placeholder.jpg',
@@ -33,7 +33,7 @@ const featuredKeyboards: FeaturedKeyboard[] = [
     price: 'Rs. 55,997',
   },
   {
-    id: 2,
+    id: '2',
     name: 'Compact Gaming Board 96',
     description: 'Compact 96% form factor designed for productivity and gaming. Perfect balance between functionality and portability without sacrificing performance.',
     image: '/placeholder.jpg',

@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import connectDB from '@/lib/db';
 import User from '@/models/User';
 
-export async function POST(req) {
+export async function POST(req: Request) {
   try {
     const { email, password } = await req.json();
 
@@ -35,10 +35,9 @@ export async function POST(req) {
       );
     }
 
-    // Create JWT
     const token = jwt.sign(
       { id: user._id, role: user.role },
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET!,
       { expiresIn: '1d' }
     );
 

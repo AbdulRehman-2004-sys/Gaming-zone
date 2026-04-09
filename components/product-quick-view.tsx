@@ -13,7 +13,7 @@ export interface QuickViewProduct {
     name: string;
     description: string;
     image: string;
-    price: string;
+    price?: string;
     specs?: string[] | Record<string, string | number | undefined>;
     category: string;
 }
