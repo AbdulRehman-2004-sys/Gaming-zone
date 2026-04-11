@@ -21,6 +21,26 @@ const settingsSchema = new mongoose.Schema(
     contactEmail: {
       type: String,
     },
+    paymentMethods: {
+      cod: {
+        enabled: { type: Boolean, default: true },
+        title: { type: String, default: "Cash on Delivery" },
+        description: { type: String, default: "Pay when you receive your order." },
+      },
+      bank: {
+        enabled: { type: Boolean, default: false },
+        title: { type: String, default: "Bank Transfer" },
+        description: { type: String, default: "Transfer directly to our bank account." },
+        details: { type: String, default: "" },
+      },
+      stripe: {
+        enabled: { type: Boolean, default: false },
+        title: { type: String, default: "Credit/Debit Card (Stripe)" },
+        description: { type: String, default: "Secure payment via Stripe." },
+        publishableKey: { type: String, default: "" },
+        secretKey: { type: String, default: "" },
+      },
+    },
   },
   { timestamps: true },
 );

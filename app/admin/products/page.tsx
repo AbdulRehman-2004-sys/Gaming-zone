@@ -3,7 +3,8 @@
 import { useState } from "react"
 import {
     Plus, Search, Filter, MoreVertical, Edit2, Trash2, X,
-    LayoutDashboard, Package, Settings
+    LayoutDashboard, Package, Settings, Cpu, Monitor, Armchair,
+    Users, BookOpen, UserCheck, CreditCard
 } from "lucide-react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -14,42 +15,7 @@ import { toast } from 'react-toastify';
 import { createProduct, getProducts, deleteProduct, updateProduct } from "@/lib/actions/product";
 import { useEffect } from "react";
 
-const CATEGORY_MAP: Record<string, Record<string, string[]>> = {
-    "Gaming Gear": {
-        "Keyboard": ["Switches", "Layout", "RGB", "Connection", "Polling", "Build", "Weight"],
-        "Mice": ["Sensor", "Buttons", "Weight", "Connection", "Polling"],
-        "Headsets": ["Driver", "Frequency", "Battery", "Connection", "Features"],
-        "Controllers": ["Connection", "Buttons", "Battery", "Features", "Compatibility"],
-        "Mousepads": ["Size", "Material", "Surface", "RGB", "Base"],
-        "Cables": ["Length", "Type", "Color", "Material"],
-        "Accessories": ["Type", "Compatibility", "Color"],
-    },
-    "Gaming PCs": {
-        "Desktops": ["Processor", "Graphics", "Memory", "Storage", "OS"],
-        "Laptops": ["Display", "Processor", "Graphics", "Memory", "Storage", "Battery"],
-        "Monitors": ["Screen Size", "Resolution", "Refresh Rate", "Panel Type", "Response Time"],
-        "Pre-built Systems": ["Case", "CPU", "GPU", "RAM", "Storage", "Cooling"],
-        "Workstations": ["CPU", "GPU", "RAM", "Storage", "Motherboard", "PSU"],
-    },
-    "Gaming Furniture": {
-        "Gaming Chairs": ["Material", "Color", "Recline", "Armrests", "Base", "Weight Capacity"],
-        "Gaming Desks": ["Material", "Dimensions", "Height Adjustment", "Color"],
-        "Stands": ["Type", "Compatibility", "Material", "Finish"],
-        "Furniture Accessories": ["Type", "Compatibility", "Material"],
-    },
-    "PC Components": {
-        "Processors": ["Architecture", "Cores", "Threads", "Base Clock", "Boost Clock", "Socket"],
-        "Graphics Cards": ["GPU", "Memory", "Form Factor", "Power Connectors", "Cooling Type"],
-        "Motherboards": ["Socket", "Chipset", "Form Factor", "Memory Slots", "PCIe Slots"],
-        "Memory": ["Type", "Capacity", "Frequency", "Latency", "Voltage"],
-        "Storage": ["Type", "Capacity", "Interface", "Read Speed", "Write Speed"],
-        "Power Supply": ["Wattage", "Efficiency", "Modularity", "Form Factor"],
-        "Cooling": ["Socket", "Type", "Fan Speed", "Noise Level", "RGB"],
-        "Cables": ["Type", "Length", "Connector A", "Connector B", "Material"],
-    }
-};
-
-const MAIN_CATEGORIES = Object.keys(CATEGORY_MAP);
+import { CATEGORY_MAP, MAIN_CATEGORIES } from "@/lib/categories";
 
 export default function AdminProducts() {
     const [showAddForm, setShowAddForm] = useState(false)
@@ -170,60 +136,66 @@ export default function AdminProducts() {
     }
 
     return (
-        <div className="flex min-h-screen bg-zinc-950 text-zinc-100">
-            {/* Sidebar */}
-            <aside className="w-64 border-r border-zinc-800 bg-zinc-900/50 p-6 flex flex-col gap-8">
-                <div className="flex items-center gap-2 px-2">
-                    <div className="w-8 h-8 bg-yellow-400 rounded-md flex items-center justify-center text-black font-bold">C</div>
-                    <span className="font-bold text-xl tracking-tight">ADMIN</span>
+        <div className="flex flex-col gap-8">
+            <header className="flex justify-between items-end">
+                <div>
+                    <h1 className="text-3xl font-bold tracking-tight">Products Management</h1>
+                    <p className="text-zinc-500 mt-1">Manage your storefront's product catalog and add new items by category.</p>
                 </div>
-                <nav className="flex flex-col gap-2">
-                    <Link href="/admin" className="flex items-center gap-3 px-3 py-2 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50 rounded-lg transition-all">
-                        <LayoutDashboard size={20} />
-                        <span className="font-medium">Dashboard</span>
-                    </Link>
-                    <Link href="/admin/products" className="flex items-center gap-3 px-3 py-2 bg-zinc-800 rounded-lg text-yellow-400 transition-colors">
-                        <Package size={20} />
-                        <span className="font-medium">Products</span>
-                    </Link>
-                    <Link href="/admin/settings" className="flex items-center gap-3 px-3 py-2 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50 rounded-lg transition-all">
-                        <Settings size={20} />
-                        <span className="font-medium">Settings</span>
-                    </Link>
-                </nav>
-            </aside>
+            </header>
 
-            {/* Main Content */}
-            <main className="flex-1 p-8 overflow-y-auto">
-                <div className="max-w-6xl mx-auto flex flex-col gap-8">
-                    <header className="flex justify-between items-end">
+            {/* Category Selection Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Link href="/admin/products/gaming-gear" className="p-4 bg-zinc-900/50 border border-zinc-800 rounded-xl hover:bg-zinc-800/50 hover:border-yellow-400/50 transition-all group">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-zinc-800 rounded-lg flex items-center justify-center text-yellow-400 group-hover:scale-110 transition-transform">
+                            <Cpu size={20} />
+                        </div>
                         <div>
-                            <h1 className="text-3xl font-bold tracking-tight">Products</h1>
-                            <p className="text-zinc-500 mt-1">Manage your storefront's product catalog.</p>
+                            <h3 className="font-bold text-sm">Gaming Gear</h3>
+                            <p className="text-[10px] text-zinc-500">Add Mice, Keyboards, etc.</p>
                         </div>
-                        <button
-                            onClick={() => setShowAddForm(true)}
-                            className="px-4 py-2 bg-yellow-400 text-black font-semibold rounded-lg hover:bg-yellow-300 transition-colors flex items-center gap-2"
-                        >
-                            <Plus size={18} /> Add Product
-                        </button>
-                    </header>
-
-                    {/* Filters & Search */}
-                    <div className="flex gap-4">
-                        <div className="relative flex-1">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={18} />
-                            <Input
-                                placeholder="Search products..."
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                className="pl-10 bg-zinc-900 border-zinc-800 text-zinc-100 focus:border-yellow-400 ring-0"
-                            />
-                        </div>
-                        <button className="px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-400 hover:text-zinc-100 hover:border-zinc-700 transition-all flex items-center gap-2">
-                            <Filter size={18} /> Filter
-                        </button>
                     </div>
+                </Link>
+                <Link href="/admin/products/gaming-pc" className="p-4 bg-zinc-900/50 border border-zinc-800 rounded-xl hover:bg-zinc-800/50 hover:border-yellow-400/50 transition-all group">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-zinc-800 rounded-lg flex items-center justify-center text-yellow-400 group-hover:scale-110 transition-transform">
+                            <Monitor size={20} />
+                        </div>
+                        <div>
+                            <h3 className="font-bold text-sm">Gaming PCs</h3>
+                            <p className="text-[10px] text-zinc-500">Add Desktops, Laptops, etc.</p>
+                        </div>
+                    </div>
+                </Link>
+                <Link href="/admin/products/gaming-furniture" className="p-4 bg-zinc-900/50 border border-zinc-800 rounded-xl hover:bg-zinc-800/50 hover:border-yellow-400/50 transition-all group">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-zinc-800 rounded-lg flex items-center justify-center text-yellow-400 group-hover:scale-110 transition-transform">
+                            <Armchair size={20} />
+                        </div>
+                        <div>
+                            <h3 className="font-bold text-sm">Gaming Furniture</h3>
+                            <p className="text-[10px] text-zinc-500">Add Chairs, Desks, etc.</p>
+                        </div>
+                    </div>
+                </Link>
+            </div>
+
+            {/* Filters & Search */}
+            <div className="flex gap-4">
+                <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={18} />
+                    <Input
+                        placeholder="Search products..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="pl-10 bg-zinc-900 border-zinc-800 text-zinc-100 focus:border-yellow-400 ring-0"
+                    />
+                </div>
+                <button className="px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-400 hover:text-zinc-100 hover:border-zinc-700 transition-all flex items-center gap-2">
+                    <Filter size={18} /> Filter
+                </button>
+            </div>
 
                     {/* Product Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -274,12 +246,10 @@ export default function AdminProducts() {
                             </Card>
                         ))}
                     </div>
-                </div>
-            </main>
 
-            {/* Add Product Modal */}
-            {showAddForm && (
-                <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                    {/* Add Product Modal */}
+                    {showAddForm && (
+                        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
                     <div className="bg-zinc-900 border border-zinc-800 rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col">
                         <header className="p-6 border-b border-zinc-800 flex justify-between items-center">
                             <h2 className="text-xl font-bold">{editingProduct ? 'Edit Product' : 'Add New Product'}</h2>

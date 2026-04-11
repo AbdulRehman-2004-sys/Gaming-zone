@@ -14,12 +14,12 @@ const features = [
     {
         title: "ERGONOMICS WITHOUT COMPROMISE",
         description: "Designed for marathon sessions, our gaming chairs provide top-tier lumbar support and adjustable 4D armrests to keep you in peak form.",
-        image: "/img/highendgamingpc-setup.png",
+        image: "new-images/gaming-furniture/Whisk_dcfc8108b5d51029a0b4e69dc536ec9ddr.jpeg",
     },
     {
         title: "THE ULTIMATE COMMAND CENTER",
         description: "Modular gaming desks built with heavy-duty steel frames and integrated cable management. Elevate your setup with height-adjustable precision.",
-        image: "/img/gamingpc-setup.png",
+        image: "new-images/gaming-furniture/Whisk_e864d6902d59baebdc0453877e8a224adr.jpeg",
         reversed: true,
     }
 ];

@@ -11,9 +11,9 @@ export const metadata = {
 
 const series = [
     {
-        title: 'Intel Core 14th Gen',
+        title: 'Intel Core i9 13th Gen',
         description: 'Blazing fast clock speeds and hybrid architecture for elite gaming and multitasking.',
-        image: '/img/pc-component.png',
+        image: '/new-images/pc-components/processor-1.jpeg',
         href: '#',
         features: ['Up to 6.0GHz Boost', 'Performance-cores & Efficient-cores', 'DDR5 Support'],
         align: 'left' as const,
@@ -21,22 +21,13 @@ const series = [
     {
         title: 'AMD Ryzen 7000 Series',
         description: 'The world\'s most advanced desktop processors, powered by Zen 4 architecture.',
-        image: '/img/Gaming-Pc-PNG-Isolated-Photo.png',
+        image: '/new-images/pc-components/processor-2.jpeg',
         href: '#',
         features: ['5nm Process Technology', 'PCIe 5.0 Support', 'AM5 Platform'],
         align: 'right' as const,
     },
 ];
 
-const buyingGuide = {
-    title: 'Choosing Your CPU',
-    steps: [
-        {
-            title: '1. Gaming Focus',
-            content: 'For pure gaming, 6-8 cores like the Ryzen 7 7800X3D or Core i7-14700K are the sweet spot.',
-        },
-    ],
-};
 
 export default async function ProcessorsPage() {
     const dbProducts = await getProducts({ 
@@ -55,7 +46,6 @@ export default async function ProcessorsPage() {
                 heroImage="/new-images/pc-components/processor.jpeg"
                 series={series}
                 products={formattedDbProducts}
-                buyingGuide={buyingGuide}
             />
             <Footer />
         </>

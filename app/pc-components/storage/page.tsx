@@ -13,22 +13,13 @@ const series = [
     {
         title: 'MP700 PRO Gen5 NVMe',
         description: 'Experience incredible sequential read and write speeds up to 12,400MB/sec.',
-        image: '/img/pc-component.png',
+        image: '/new-images/pc-components/storage-1.jpeg',
         href: '#',
         features: ['PCIe Gen5 x4 Interface', 'High-Density 3D TLC NAND', 'Integrated Air Cooler'],
         align: 'left' as const,
     },
 ];
 
-const buyingGuide = {
-    title: 'Storage Guide',
-    steps: [
-        {
-            title: '1. NVMe vs SATA',
-            content: 'NVMe SSDs are much faster and the standard for modern gaming. SATA is better for bulk storage at a lower cost.',
-        },
-    ],
-};
 
 export default async function StoragePage() {
     const dbProducts = await getProducts({ 
@@ -47,7 +38,6 @@ export default async function StoragePage() {
                 heroImage="/new-images/pc-components/storage.jpeg"
                 series={series}
                 products={formattedDbProducts}
-                buyingGuide={buyingGuide}
             />
             <Footer />
         </>

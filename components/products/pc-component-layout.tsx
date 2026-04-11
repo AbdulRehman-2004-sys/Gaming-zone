@@ -180,7 +180,7 @@ export function PCComponentLayout({
             </section>
 
             {/* Products Grid Section */}
-            {products.length > 0 && (
+            {/* {products.length > 0 && (
                 <section className="py-20 px-6 md:px-12 border-t border-yellow-400/20">
                     <div className="max-w-7xl mx-auto">
                         <h2 className="text-3xl md:text-5xl font-bold mb-12 flex items-center gap-4 uppercase">
@@ -231,7 +231,7 @@ export function PCComponentLayout({
                         </div>
                     </div>
                 </section>
-            )}
+            )} */}
 
             {/* Buying Guide Section */}
             {buyingGuide && (

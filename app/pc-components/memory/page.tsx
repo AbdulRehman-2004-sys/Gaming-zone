@@ -13,7 +13,7 @@ const series: any[] = [
     {
         title: 'DOMINATOR TITANIUM DDR5',
         description: 'The ultimate in luxury and performance. Patented DHX cooling, interchangeable top bars, and extreme overclocking potential.',
-        image: '/img/Computer-Motherboard-PNG-Photos.png',
+        image: '/new-images/pc-components/memory-1.jpeg',
         href: '#',
         features: ['Premium Die-Cast Aluminum', '11-Zone RGB Lighting', 'XMP 3.0 & EXPO Ready'],
         align: 'left' as const,
@@ -21,31 +21,13 @@ const series: any[] = [
     {
         title: 'VENGEANCE RGB DDR5',
         description: 'Push the limits of your system with dynamic ten-zone RGB lighting and tightly screened high-frequency memory chips.',
-        image: '/img/high-performance-gaming-pc-with-an-open-case-showing-illuminated-internal-components-like-the-motherboard-and-graphics-card-on-a-transparent-background-free-png.png',
+        image: '/new-images/pc-components/memory-2.jpeg',
         href: '#',
         features: ['Panoramic RGB Light Bar', 'Optimized for Intel & AMD', 'Custom PCB Design'],
         align: 'right' as const,
     },
 ];
 
-const buyingGuide = {
-    title: 'RAM Buyer\'s Guide',
-    steps: [
-        {
-            title: '1. DDR4 vs DDR5',
-            content: 'Check your motherboard/CPU compatibility. DDR5 offers higher speeds and bandwidth.',
-        },
-    ],
-};
-
-const guides: any[] = [
-    {
-        title: 'DDR5 Explained',
-        description: 'Why upgrading to DDR5 matters for next-gen gaming.',
-        image: '/img/pc-components-101-all.png',
-        href: '#',
-    },
-];
 
 export default async function MemoryPage() {
     const dbProducts = await getProducts({ 
@@ -64,8 +46,6 @@ export default async function MemoryPage() {
                 heroImage="/new-images/pc-components/memory.jpeg"
                 series={series}
                 products={formattedDbProducts}
-                buyingGuide={buyingGuide}
-                guides={guides}
             />
             <Footer />
         </>

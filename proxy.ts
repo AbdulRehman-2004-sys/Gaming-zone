@@ -8,21 +8,20 @@ export async function proxy(req: NextRequest) {
 
   const { pathname } = req.nextUrl;
 
-  // Protected Admin Routes
-  if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin')) {
+  // Protected Admin API Routes
+  if (pathname.startsWith('/api/admin')) {
     if (!token) {
-      return NextResponse.redirect(new URL('/signin', req.url));
+      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
     try {
       const { payload } = await jose.jwtVerify(token, JWT_SECRET);
       
       if (payload.role !== 'admin') {
-        // Forbidden if not admin
         return NextResponse.json({ message: 'Forbidden' }, { status: 403 });
       }
     } catch (error) {
-      return NextResponse.redirect(new URL('/signin', req.url));
+      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
   }
 
@@ -43,5 +42,5 @@ export async function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/admin/:path*', '/api/user/:path*'],
+  matcher: ['/api/admin/:path*', '/api/user/:path*'],
 };

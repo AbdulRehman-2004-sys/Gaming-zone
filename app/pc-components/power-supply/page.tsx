@@ -13,22 +13,13 @@ const series = [
     {
         title: 'RMx Series',
         description: 'Fully modular power supplies with 80 PLUS Gold efficiency and magnetic levitation fans.',
-        image: '/img/pc-component.png',
+        image: '/new-images/pc-components/power-1.jpeg',
         href: '#',
         features: ['80 PLUS Gold Certified', 'Fully Modular', 'Zero RPM Fan Mode'],
         align: 'left' as const,
     },
 ];
 
-const buyingGuide = {
-    title: 'PSU Guide',
-    steps: [
-        {
-            title: '1. Wattage Requirements',
-            content: 'Calculate your total system power draw. For high-end GPUs, we recommend at least 850W-1000W.',
-        },
-    ],
-};
 
 export default async function PowerSupplyPage() {
     const dbProducts = await getProducts({ 
@@ -47,7 +38,6 @@ export default async function PowerSupplyPage() {
                 heroImage="/new-images/pc-components/power-supply.jpeg"
                 series={series}
                 products={formattedDbProducts}
-                buyingGuide={buyingGuide}
             />
             <Footer />
         </>

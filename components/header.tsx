@@ -18,7 +18,7 @@ export function Header() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { user, refreshUser } = useAuth();
+  const { user, loading, refreshUser } = useAuth();
   const { totalItems } = useCart();
   const settings = useSettings();
   const router = useRouter();
@@ -37,9 +37,7 @@ export function Header() {
     const res = await logout();
     if (res.success) {
       toast.success('Logged out successfully');
-      await refreshUser();
-      router.push('/');
-      router.refresh();
+      window.location.href = '/';
     }
   };
 
@@ -83,7 +81,7 @@ export function Header() {
 
             {/* Right Actions */}
             <div className="flex items-center gap-1 sm:gap-2 lg:gap-4 lg:absolute lg:right-4 xl:right-8">
-              {user && (
+              {user && user.role !== 'admin' && (
                 <Link href="/cart" className="text-white hover:text-yellow-400 transition-colors p-2 relative flex-shrink-0 mr-2">
                   <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
                   {totalItems > 0 && (
@@ -98,8 +96,10 @@ export function Header() {
                 <Search className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
 
-              <div className="hidden md:flex items-center gap-2 lg:gap-3">
-                {user ? (
+              <div className="hidden md:flex items-center gap-2 lg:gap-3 min-w-[120px] justify-end">
+                {loading ? (
+                  <div className="h-8 w-24 bg-zinc-800 animate-pulse rounded-full"></div>
+                ) : user && user.role !== 'admin' ? (
                   <div className="relative" ref={dropdownRef}>
                     <button
                       onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -179,7 +179,9 @@ export function Header() {
                 </Link>
               </div>
               <div className="pt-2 sm:pt-3 border-t border-yellow-400/30 space-y-2 px-4 pb-4">
-                {user ? (
+                {loading ? (
+                  <div className="h-12 w-full bg-zinc-900 animate-pulse rounded-xl border border-zinc-800"></div>
+                ) : user && user.role !== 'admin' ? (
                   <div className="space-y-3">
                     <div className="flex items-center gap-3 p-3 bg-zinc-900 rounded-xl border border-zinc-800">
                       <div className="w-10 h-10 rounded-full bg-yellow-400 flex items-center justify-center text-black text-sm font-bold">

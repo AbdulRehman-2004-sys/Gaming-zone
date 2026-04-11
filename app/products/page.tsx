@@ -17,7 +17,7 @@ const featuredProducts = [
         name: 'M65 RGB ELITE',
         category: 'Gaming Mouse',
         price: 'Rs. 22,397',
-        image: '/mice/rgb-led-gaming-mouse.png',
+        image: 'new-images/gaming-gear/mouse.jpeg',
         badge: 'Best Seller',
         description: 'Tournament-proven mouse with 18,000 DPI sensor and adjustable weight system.'
     },
@@ -26,7 +26,7 @@ const featuredProducts = [
         name: 'K100 RGB MECHANICAL',
         category: 'Keyboard',
         price: 'Rs. 64,397',
-        image: '/keyboard/elegant-abstract-gaming-keyboard-with-rgb-lighting-isolated-cutout-premium-png.png',
+        image: 'new-images/gaming-gear/keyboard.jpeg',
         badge: 'Premium',
         description: 'The pinnacle of gaming keyboards, featuring AXON Hyper-Processing Technology.'
     },
@@ -35,7 +35,7 @@ const featuredProducts = [
         name: 'HS80 RGB WIRELESS',
         category: 'Headset',
         price: 'Rs. 41,997',
-        image: '/handset/ADZ_Maxwell2_GalleryPS_noicons_010826_1200x.png',
+        image: 'new-images/gaming-gear/headset.jpeg',
         badge: 'Popular',
         description: 'Immersive spatial audio and broadcast-grade microphone for elite gaming.'
     },
@@ -44,8 +44,7 @@ const featuredProducts = [
         name: 'M75 AIR WIRELESS',
         category: 'Gaming Mouse',
         price: 'Rs. 36,397',
-        image: '/mice/modern-wireless-gaming-computer-mouse-with-lighting-png.png',
-        badge: 'Ultra-Lightweight',
+        image: 'new-images/gaming-gear/mouse.jpeg',
         description: 'Symmetrically shaped for comfort and built for precision at only 60g.'
     }
 ];
@@ -54,12 +53,12 @@ const features = [
     {
         title: "PRECISION AT YOUR FINGERTSIPS",
         description: "Our gaming mice and keyboards feature ultra-responsive optical switches and industry-leading sensors for zero-lag competitive play.",
-        image: "/keyboard/elegant-abstract-gaming-keyboard-with-rgb-lighting-isolated-cutout-premium-png.png",
+        image: 'new-images/gaming-gear/keyboard.jpeg',
     },
     {
         title: "IMMERSE YOUR SENSES",
         description: "High-fidelity spatial audio and custom-tuned drivers. Hear every footstep and feel every explosion with our premium headsets.",
-        image: "/handset/ADZ_Maxwell2_GalleryPS_noicons_010826_1200x.png",
+        image: "new-images/gaming-gear/headset.jpeg",
         reversed: true,
     }
 ];

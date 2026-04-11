@@ -12,21 +12,13 @@ const shortcuts = [
 ];
 
 const featuredProducts = [
-  {
-    id: 'pc-1',
-    name: 'VENGEANCE i7500 Gaming PC',
-    category: 'Gaming Desktop',
-    price: 'Rs. 699,997',
-    image: '/img/Gaming-Pc-PNG-Isolated-Photo.png',
-    badge: 'Elite Performance',
-    description: 'Powered by Intel Core i9-14900K and NVIDIA GeForce RTX 4090 for ultimate 4K gaming.'
-  },
+ 
   {
     id: 'lap-1',
     name: 'VOYAGER a1600 Edition',
     category: 'Gaming Laptop',
     price: 'Rs. 559,997',
-    image: '/img/png-transparent-laptop-gaming-computer-personal-computer-homebuilt-computer-pc-game-gaming-computer-hd-game-electronics-computer-thumbnail.png',
+    image: 'home/pc.jpeg',
     badge: 'Mobile Powerhouse',
     description: 'Experience desktop-class performance in a thin, light portable form factor.'
   },
@@ -35,31 +27,23 @@ const featuredProducts = [
     name: 'XENEON FLEX 45WQHD240 OLED',
     category: 'Gaming Monitor',
     price: 'Rs. 447,997',
-    image: '/img/pngtree-pc-monitor-component-isometric-png-image_8930550.png',
+    image: 'home/gaming-pc.jpeg',
     badge: 'Revolutionary',
     description: 'The world\'s first bendable 45-inch OLED gaming monitor with 240Hz refresh rate.'
   },
-  {
-    id: 'pc-2',
-    name: 'ONE i500 Compact PC',
-    category: 'Compact Gaming PC',
-    price: 'Rs. 923,997',
-    image: '/img/pngtree-a-sleek-gaming-pc-case-showcasing-vibrant-rgb-fans-and-components-png-image_15866247.png',
-    badge: 'Space Saver',
-    description: 'Extreme performance in an incredibly small footprint, liquid cooled and silent.'
-  }
+  
 ];
 
 const features = [
   {
     title: "THE ULTIMATE GAMING MACHINES",
     description: "Our precision-engineered gaming PCs deliver extreme performance and stunning aesthetics. Built with top-tier components and rigorously tested.",
-    image: "/img/Gaming-Pc-PNG-Isolated-Photo.png",
+    image: "new-images/gaming-pc/gaming-pcs.jpeg",
   },
   {
     title: "POWER TO GO",
     description: "Experience desktop-class performance in a portable form factor. Our gaming laptops are thin, light, and powerful enough for the most demanding titles.",
-    image: "/img/png-transparent-laptop-gaming-computer-personal-computer-homebuilt-computer-pc-game-gaming-computer-hd-game-electronics-computer-thumbnail.png",
+    image: "new-images/gaming-pc/desktop.jpeg",
     reversed: true,
   }
 ];

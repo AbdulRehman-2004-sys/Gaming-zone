@@ -29,6 +29,23 @@ export default function CheckoutPage() {
   }
 
   const shipping = 0;
+  const [paymentMethod, setPaymentMethod] = useState<string>('cod');
+  const [paymentSettings, setPaymentSettings] = useState<any>(null);
+
+  useEffect(() => {
+    async function loadSettings() {
+      const data = await getSettings();
+      if (data?.paymentMethods) {
+        setPaymentSettings(data.paymentMethods);
+        // Set default method to first enabled one
+        const enabled = Object.entries(data.paymentMethods)
+          .find(([_, m]: any) => m.enabled)?.[0];
+        if (enabled) setPaymentMethod(enabled);
+      }
+    }
+    loadSettings();
+  }, []);
+
   const total = subtotal + shipping;
 
   const handlePlaceOrder = (e: React.FormEvent) => {
@@ -119,30 +136,95 @@ export default function CheckoutPage() {
                 <CreditCard className="w-6 h-6" />
                 <h2 className="text-2xl font-black uppercase italic">PAYMENT METHOD</h2>
               </div>
-              <div className="p-6 bg-gray-900 rounded-2xl border-2 border-yellow-400/20 space-y-6">
-                <div>
-                  <label className="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Card Number</label>
-                  <input 
-                    required 
-                    className="w-full bg-black border-2 border-gray-800 focus:border-yellow-400 p-4 outline-none transition-colors rounded-lg placeholder:text-gray-700 font-mono tracking-widest" 
-                    placeholder="xxxx xxxx xxxx xxxx"
-                    maxLength={19}
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Expiry Date</label>
-                    <input required className="w-full bg-black border-2 border-gray-800 focus:border-yellow-400 p-4 outline-none transition-colors rounded-lg placeholder:text-gray-700" placeholder="MM/YY" maxLength={5} />
+              
+              <div className="grid grid-cols-1 gap-4">
+                {paymentSettings?.cod?.enabled && (
+                  <label className={`flex items-center gap-4 p-6 bg-gray-900 rounded-2xl border-2 transition-all cursor-pointer ${paymentMethod === 'cod' ? 'border-yellow-400' : 'border-gray-800 hover:border-gray-700'}`}>
+                    <input type="radio" name="paymentType" className="hidden" onChange={() => setPaymentMethod('cod')} checked={paymentMethod === 'cod'} />
+                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${paymentMethod === 'cod' ? 'border-yellow-400' : 'border-gray-600'}`}>
+                      {paymentMethod === 'cod' && <div className="w-3 h-3 bg-yellow-400 rounded-full" />}
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Banknote className={paymentMethod === 'cod' ? 'text-yellow-400' : 'text-gray-500'} />
+                      <div>
+                        <p className="font-bold uppercase tracking-tight">Cash on Delivery</p>
+                        <p className="text-[10px] text-gray-500 font-bold uppercase">Pay when your gear arrives</p>
+                      </div>
+                    </div>
+                  </label>
+                )}
+
+                {paymentSettings?.bank?.enabled && (
+                  <div className="space-y-4">
+                    <label className={`flex items-center gap-4 p-6 bg-gray-900 rounded-2xl border-2 transition-all cursor-pointer ${paymentMethod === 'bank' ? 'border-yellow-400' : 'border-gray-800 hover:border-gray-700'}`}>
+                      <input type="radio" name="paymentType" className="hidden" onChange={() => setPaymentMethod('bank')} checked={paymentMethod === 'bank'} />
+                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${paymentMethod === 'bank' ? 'border-yellow-400' : 'border-gray-600'}`}>
+                        {paymentMethod === 'bank' && <div className="w-3 h-3 bg-yellow-400 rounded-full" />}
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <Building2 className={paymentMethod === 'bank' ? 'text-yellow-400' : 'text-gray-500'} />
+                        <div>
+                          <p className="font-bold uppercase tracking-tight">Bank Transfer</p>
+                          <p className="text-[10px] text-gray-500 font-bold uppercase">Manual transfer to our bank account</p>
+                        </div>
+                      </div>
+                    </label>
+                    {paymentMethod === 'bank' && (
+                      <div className="p-6 bg-zinc-900 border-2 border-yellow-400/20 rounded-2xl animate-in fade-in slide-in-from-top-2">
+                        <p className="text-xs font-black text-yellow-400 uppercase tracking-widest mb-3">Bank Details:</p>
+                        <pre className="text-xs text-gray-400 whitespace-pre-wrap font-mono leading-relaxed bg-black/50 p-4 rounded-lg">
+                          {paymentSettings.bank.details || "Bank details will be provided by our support team."}
+                        </pre>
+                      </div>
+                    )}
                   </div>
-                  <div>
-                    <label className="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">CVV</label>
-                    <input required className="w-full bg-black border-2 border-gray-800 focus:border-yellow-400 p-4 outline-none transition-colors rounded-lg placeholder:text-gray-700" placeholder="123" maxLength={3} />
+                )}
+
+                {paymentSettings?.stripe?.enabled && (
+                  <div className="space-y-4">
+                    <label className={`flex items-center gap-4 p-6 bg-gray-900 rounded-2xl border-2 transition-all cursor-pointer ${paymentMethod === 'stripe' ? 'border-yellow-400' : 'border-gray-800 hover:border-gray-700'}`}>
+                      <input type="radio" name="paymentType" className="hidden" onChange={() => setPaymentMethod('stripe')} checked={paymentMethod === 'stripe'} />
+                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${paymentMethod === 'stripe' ? 'border-yellow-400' : 'border-gray-600'}`}>
+                        {paymentMethod === 'stripe' && <div className="w-3 h-3 bg-yellow-400 rounded-full" />}
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CreditCard className={paymentMethod === 'stripe' ? 'text-yellow-400' : 'text-gray-500'} />
+                        <div>
+                          <p className="font-bold uppercase tracking-tight">Credit / Debit Card</p>
+                          <p className="text-[10px] text-gray-500 font-bold uppercase">Secure payment via Stripe</p>
+                        </div>
+                      </div>
+                    </label>
+                    
+                    {paymentMethod === 'stripe' && (
+                      <div className="p-6 bg-gray-900 rounded-2xl border-2 border-yellow-400/20 space-y-6 animate-in fade-in slide-in-from-top-2">
+                        <div>
+                          <label className="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Card Number</label>
+                          <input 
+                            required 
+                            className="w-full bg-black border-2 border-gray-800 focus:border-yellow-400 p-4 outline-none transition-colors rounded-lg placeholder:text-gray-700 font-mono tracking-widest" 
+                            placeholder="xxxx xxxx xxxx xxxx"
+                            maxLength={19}
+                          />
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Expiry Date</label>
+                            <input required className="w-full bg-black border-2 border-gray-800 focus:border-yellow-400 p-4 outline-none transition-colors rounded-lg placeholder:text-gray-700" placeholder="MM/YY" maxLength={5} />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">CVV</label>
+                            <input required className="w-full bg-black border-2 border-gray-800 focus:border-yellow-400 p-4 outline-none transition-colors rounded-lg placeholder:text-gray-700" placeholder="123" maxLength={3} />
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3 text-[10px] text-gray-500 font-bold uppercase tracking-widest pt-2">
+                          <ShieldCheck className="w-4 h-4 text-green-500" />
+                          SSL SECURE 256-BIT ENCRYPTION
+                        </div>
+                      </div>
+                    )}
                   </div>
-                </div>
-                <div className="flex items-center gap-3 text-[10px] text-gray-500 font-bold uppercase tracking-widest pt-2">
-                  <ShieldCheck className="w-4 h-4 text-green-500" />
-                  SSL SECURE 256-BIT ENCRYPTION
-                </div>
+                )}
               </div>
             </section>
 

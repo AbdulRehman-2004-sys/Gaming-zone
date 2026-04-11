@@ -6,7 +6,7 @@ import User from '@/models/User';
 
 export async function POST(req: Request) {
   try {
-    const { email, password } = await req.json();
+    const { email, password, source } = await req.json();
 
     if (!email || !password) {
       return NextResponse.json(
@@ -32,6 +32,13 @@ export async function POST(req: Request) {
       return NextResponse.json(
         { message: 'Invalid credentials' },
         { status: 401 }
+      );
+    }
+
+    if (user.role === 'admin' && source !== 'admin') {
+      return NextResponse.json(
+        { message: 'Admins must login via the Admin Portal', redirect: '/admin' },
+        { status: 403 }
       );
     }
 

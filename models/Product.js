@@ -42,6 +42,14 @@ const productSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    isGuide: {
+      type: Boolean,
+      default: false,
+    },
+    guideContent: {
+      type: String,
+      default: "",
+    },
     badge: {
       type: String,
       default: "",

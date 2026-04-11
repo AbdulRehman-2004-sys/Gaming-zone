@@ -95,46 +95,21 @@ export default function AdminSettings() {
     }
 
     return (
-        <div className="flex min-h-screen bg-zinc-950 text-zinc-100">
-            {/* Sidebar */}
-            <aside className="w-64 border-r border-zinc-800 bg-zinc-900/50 p-6 flex flex-col gap-8">
-                <div className="flex items-center gap-2 px-2">
-                    <div className="w-8 h-8 bg-yellow-400 rounded-md flex items-center justify-center text-black font-bold">C</div>
-                    <span className="font-bold text-xl tracking-tight">ADMIN</span>
+        <div className="max-w-4xl mx-auto">
+            <header className="flex justify-between items-end mb-8">
+                <div>
+                    <h1 className="text-3xl font-bold tracking-tight">Site Settings</h1>
+                    <p className="text-zinc-500 mt-1">Configure your store's global appearance and contact info.</p>
                 </div>
-                <nav className="flex flex-col gap-2">
-                    <Link href="/admin" className="flex items-center gap-3 px-3 py-2 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50 rounded-lg transition-all">
-                        <LayoutDashboard size={20} />
-                        <span className="font-medium">Dashboard</span>
-                    </Link>
-                    <Link href="/admin/products" className="flex items-center gap-3 px-3 py-2 text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50 rounded-lg transition-all">
-                        <Package size={20} />
-                        <span className="font-medium">Products</span>
-                    </Link>
-                    <Link href="/admin/settings" className="flex items-center gap-3 px-3 py-2 bg-zinc-800 rounded-lg text-yellow-400 transition-colors">
-                        <SettingsIcon size={20} />
-                        <span className="font-medium">Settings</span>
-                    </Link>
-                </nav>
-            </aside>
-
-            {/* Main Content */}
-            <main className="flex-1 p-8 overflow-y-auto">
-                <div className="max-w-4xl mx-auto">
-                    <header className="flex justify-between items-end mb-8">
-                        <div>
-                            <h1 className="text-3xl font-bold tracking-tight">Site Settings</h1>
-                            <p className="text-zinc-500 mt-1">Configure your store's global appearance and contact info.</p>
-                        </div>
-                        <button
-                            onClick={handleSubmit}
-                            disabled={loading}
-                            className="px-6 py-2 bg-yellow-400 text-black font-bold rounded-lg hover:bg-yellow-300 transition-colors flex items-center gap-2 disabled:opacity-50"
-                        >
-                            {loading ? <div className="w-5 h-5 border-2 border-black border-t-transparent animate-spin rounded-full"></div> : <Save size={18} />}
-                            Save Changes
-                        </button>
-                    </header>
+                <button
+                    onClick={handleSubmit}
+                    disabled={loading}
+                    className="px-6 py-2 bg-yellow-400 text-black font-bold rounded-lg hover:bg-yellow-300 transition-colors flex items-center gap-2 disabled:opacity-50"
+                >
+                    {loading ? <div className="w-5 h-5 border-2 border-black border-t-transparent animate-spin rounded-full"></div> : <Save size={18} />}
+                    Save Changes
+                </button>
+            </header>
 
                     <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {/* Branding Section */}
@@ -224,9 +199,7 @@ export default function AdminSettings() {
                                 </div>
                             </CardContent>
                         </Card>
-                    </form>
-                </div>
-            </main>
+            </form>
         </div>
     )
 }

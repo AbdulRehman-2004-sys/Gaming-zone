@@ -13,7 +13,7 @@ const series = [
     {
         title: 'NVIDIA GeForce RTX 40 Series',
         description: 'Beyond fast. Powered by Ada Lovelace architecture for realistic ray tracing and AI-accelerated performance.',
-        image: '/img/png-clipart-laptop-graphics-cards-video-adapters-computer-hardware-desktop-computers-pc-game-electronics-computer.png',
+        image: '/new-images/pc-components/graphic-1.jpeg',
         href: '#',
         features: ['DLSS 3.0 Support', '3rd Gen Ray Tracing Cores', 'AV1 Encoding'],
         align: 'left' as const,
@@ -21,31 +21,13 @@ const series = [
     {
         title: 'AMD Radeon RX 7000 Series',
         description: 'Breakthrough performance with RDNA 3 architecture. High frame rates and advanced visual features for 4K gaming.',
-        image: '/img/png-transparent-graphics-cards-video-adapters-computer-cases-housings-playstation-4-gaming-computer-video-game-pc-game-electronics-computer-video-game.png',
+        image: '/new-images/pc-components/graphic-2.jpeg',
         href: '#',
         features: ['Chiplet Architecture', 'DisplayPort 2.1', 'FSR 3.0 Ready'],
         align: 'right' as const,
     },
 ];
 
-const buyingGuide = {
-    title: 'Selecting a Graphics Card',
-    steps: [
-        {
-            title: '1. Resolution Target',
-            content: 'Aim for RTX 4090/RX 7900 XTX for 4K or RTX 4070 for 1440p gaming.',
-        },
-    ],
-};
-
-const guides: any[] = [
-    {
-        title: 'Ray Tracing Explained',
-        description: 'What is ray tracing and is it worth it for your games?',
-        image: '/img/pngtree-set-gaming-pc-computer-rgb-full-spesifikasi-vektor-png-image_4542581.png',
-        href: '#',
-    },
-];
 
 export default async function GraphicsCardsPage() {
     const dbProducts = await getProducts({ 
@@ -64,8 +46,6 @@ export default async function GraphicsCardsPage() {
                 heroImage="/new-images/pc-components/graphic card.jpeg"
                 series={series}
                 products={formattedDbProducts}
-                buyingGuide={buyingGuide}
-                guides={guides}
             />
             <Footer />
         </>

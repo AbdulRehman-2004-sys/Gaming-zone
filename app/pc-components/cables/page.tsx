@@ -13,7 +13,7 @@ const series = [
     {
         title: 'Premium Sleeved Cable Kits',
         description: 'Complete your build with high-quality paracord sleeved cables available in various colors.',
-        image: '/img/pc-component.png',
+        image: '/new-images/pc-components/cables.jpeg',
         href: '#',
         features: ['Flexible Paracord Sleeving', 'Pre-installed Cable Combs', 'Wide Compatibility'],
         align: 'left' as const,

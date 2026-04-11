@@ -13,7 +13,7 @@ const series: any[] = [
     {
         title: 'iCUE LINK - Smart Cooling',
         description: 'The future of DIY PC building. One cable connects multiple fans and coolers via a central hub, drastically reducing cable clutter.',
-        image: '/img/pngtree-set-gaming-pc-computer-rgb-full-spesifikasi-vektor-png-image_4542581.png',
+        image: '/new-images/pc-components/cooling-1.jpeg',
         href: '#',
         features: ['Single Cable Ecosystem', 'Smart Hub Integration', 'Magnetic Connections'],
         align: 'left' as const,
@@ -21,31 +21,13 @@ const series: any[] = [
     {
         title: 'ELITE LCD Liquid Coolers',
         description: 'Elite performance with a personalized touch. High-performance pump heads with integrated custom LCD screens.',
-        image: '/img/pngtree-water-cooled-gaming-pc-with-rgb-rainbow-led-lighting-png-image_12371747.png',
+        image: '/new-images/pc-components/cooling-2.jpeg',
         href: '#',
         features: ['Customizable IPS LCD', 'Extreme Cooling Performance', 'iCUE Controlled RGB'],
         align: 'right' as const,
     },
 ];
 
-const buyingGuide = {
-    title: 'Cooling Buyer\'s Guide',
-    steps: [
-        {
-            title: '1. Air vs Liquid',
-            content: 'Air coolers are reliable and simple. AIO Liquid coolers often offer better peak performance and aesthetics.',
-        },
-    ],
-};
-
-const guides: any[] = [
-    {
-        title: 'Cooling Performance 101',
-        description: 'How to optimize your case airflow for lower temperatures.',
-        image: '/img/pc-components-101-all.png',
-        href: '#',
-    },
-];
 
 export default async function CoolingPage() {
     const dbProducts = await getProducts({ 
@@ -64,8 +46,6 @@ export default async function CoolingPage() {
                 heroImage="/new-images/pc-components/cooling.jpeg"
                 series={series}
                 products={formattedDbProducts}
-                buyingGuide={buyingGuide}
-                guides={guides}
             />
             <Footer />
         </>

@@ -24,19 +24,22 @@ export default function SignIn() {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, source: 'user' }),
       });
 
       const data = await res.json();
 
+      if (res.status === 403 && data.redirect) {
+        toast.info(data.message || 'Redirecting...');
+        // Use window.location for a full reload
+        window.location.href = data.redirect;
+        return;
+      }
+
       if (res.ok) {
         toast.success('Welcome back!');
-        // Check role and redirect accordingly
-        if (data.user && data.user.role === 'admin') {
-          router.push('/admin');
-        } else {
-          router.push('/');
-        }
+        // Refresh local context state just in case
+        window.location.href = '/'; // Full reload to ensure layout/header reset properly
       } else {
         toast.error(data.message || 'Login failed');
       }
