@@ -17,7 +17,7 @@ const featuredProducts = [
         name: 'M65 RGB ELITE',
         category: 'Gaming Mouse',
         price: 'Rs. 22,397',
-        image: 'new-images/gaming-gear/mouse.jpeg',
+        image: 'new-images/gaming-gear/featured/mouse.jpeg',
         badge: 'Best Seller',
         description: 'Tournament-proven mouse with 18,000 DPI sensor and adjustable weight system.'
     },
@@ -26,7 +26,7 @@ const featuredProducts = [
         name: 'K100 RGB MECHANICAL',
         category: 'Keyboard',
         price: 'Rs. 64,397',
-        image: 'new-images/gaming-gear/keyboard.jpeg',
+        image: 'new-images/gaming-gear/featured/keyboard.jpeg',
         badge: 'Premium',
         description: 'The pinnacle of gaming keyboards, featuring AXON Hyper-Processing Technology.'
     },
@@ -35,7 +35,7 @@ const featuredProducts = [
         name: 'HS80 RGB WIRELESS',
         category: 'Headset',
         price: 'Rs. 41,997',
-        image: 'new-images/gaming-gear/headset.jpeg',
+        image: 'new-images/gaming-gear/featured/headset.jpeg',
         badge: 'Popular',
         description: 'Immersive spatial audio and broadcast-grade microphone for elite gaming.'
     },
@@ -44,7 +44,7 @@ const featuredProducts = [
         name: 'M75 AIR WIRELESS',
         category: 'Gaming Mouse',
         price: 'Rs. 36,397',
-        image: 'new-images/gaming-gear/mouse.jpeg',
+        image: 'new-images/gaming-gear/featured/wireless.jpeg',
         description: 'Symmetrically shaped for comfort and built for precision at only 60g.'
     }
 ];

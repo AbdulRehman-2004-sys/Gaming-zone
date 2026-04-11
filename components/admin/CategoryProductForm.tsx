@@ -1,25 +1,47 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { Input } from "@/components/ui/input";
 import { CATEGORY_MAP } from "@/lib/categories";
-import { createProduct } from "@/lib/actions/product";
+import { createProduct, updateProduct } from "@/lib/actions/product";
 import { useRouter } from 'next/navigation';
-import { Loader2, Plus, ArrowLeft } from 'lucide-react';
+import { Loader2, Plus, ArrowLeft, X } from 'lucide-react';
 import Link from 'next/link';
 
 interface Props {
     mainCategory: string;
+    onSuccess?: () => void;
+    onCancel?: () => void;
+    initialData?: any;
 }
 
-export function CategoryProductForm({ mainCategory }: Props) {
+export function CategoryProductForm({ mainCategory, onSuccess, onCancel, initialData }: Props) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [file, setFile] = useState<File | null>(null);
-    const [category, setCategory] = useState(Object.keys(CATEGORY_MAP[mainCategory] || {})[0]);
-    const [specs, setSpecs] = useState<Record<string, string>>({});
-    const [isGuide, setIsGuide] = useState(false);
+    const [category, setCategory] = useState(initialData?.category || Object.keys(CATEGORY_MAP[mainCategory] || {})[0]);
+    const [specs, setSpecs] = useState<Record<string, string>>(initialData?.specs || {});
+    const [isGuide, setIsGuide] = useState(initialData?.isGuide || false);
+
+    // If initialData changes, update state (useful for edit mode)
+    useEffect(() => {
+        if (initialData) {
+            setCategory(initialData.category);
+            setIsGuide(initialData.isGuide || false);
+            
+            let specsObj: Record<string, string> = {};
+            if (Array.isArray(initialData.specs)) {
+                initialData.specs.forEach((s: string) => {
+                    const [k, v] = s.split(': ');
+                    if (k && v) specsObj[k] = v;
+                });
+            } else if (initialData.specs && typeof initialData.specs === 'object') {
+                specsObj = { ...initialData.specs };
+            }
+            setSpecs(specsObj);
+        }
+    }, [initialData]);
 
     const handleSpecChange = (name: string, value: string) => {
         setSpecs(prev => ({ ...prev, [name]: value }));
@@ -36,8 +58,8 @@ export function CategoryProductForm({ mainCategory }: Props) {
         }
 
         try {
-            // 1. Upload Image
-            let imageUrl = "";
+            // 1. Upload Image (only if a NEW file is selected)
+            let imageUrl = initialData?.image || "";
             if (file) {
                 const uploadRes = await fetch('/api/upload', {
                     method: 'POST',
@@ -46,11 +68,11 @@ export function CategoryProductForm({ mainCategory }: Props) {
                 const uploadData = await uploadRes.json();
                 if (!uploadRes.ok) throw new Error(uploadData.message);
                 imageUrl = uploadData.url;
-            } else {
+            } else if (!initialData) {
                 throw new Error("Product image is required");
             }
 
-            // 2. Create Product
+            // 2. Create/Update Product
             const productFormData = new FormData();
             productFormData.append('name', formData.get('name') as string);
             productFormData.append('price', formData.get('price') as string);
@@ -69,14 +91,20 @@ export function CategoryProductForm({ mainCategory }: Props) {
             );
             productFormData.append('specs', JSON.stringify(filteredSpecs));
 
-            const result = await createProduct(productFormData);
+            const result = initialData 
+                ? await updateProduct(initialData._id, productFormData)
+                : await createProduct(productFormData);
 
             if (result.success) {
-                toast.success('Product created successfully!');
-                router.push('/admin/products');
-                router.refresh();
+                toast.success(initialData ? 'Product updated successfully!' : 'Product created successfully!');
+                if (onSuccess) {
+                    onSuccess();
+                } else {
+                    router.push('/admin/products');
+                    router.refresh();
+                }
             } else {
-                toast.error(result.error || 'Failed to create product');
+                toast.error(result.error || `Failed to ${initialData ? 'update' : 'create'} product`);
             }
         } catch (err: any) {
             toast.error(err.message);
@@ -87,17 +115,28 @@ export function CategoryProductForm({ mainCategory }: Props) {
 
     return (
         <div className="space-y-6">
-            <Link 
-                href="/admin/products" 
-                className="inline-flex items-center gap-2 text-zinc-500 hover:text-white transition-colors text-sm mb-4"
-            >
-                <ArrowLeft size={16} /> Back to All Products
-            </Link>
+            {!onCancel && (
+                <Link 
+                    href="/admin/products" 
+                    className="inline-flex items-center gap-2 text-zinc-500 hover:text-white transition-colors text-sm mb-4"
+                >
+                    <ArrowLeft size={16} /> Back to All Products
+                </Link>
+            )}
 
             <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden shadow-xl">
-                <header className="p-6 border-b border-zinc-800 bg-zinc-900/50">
-                    <h2 className="text-xl font-bold italic text-yellow-400 uppercase tracking-tighter">Add {mainCategory} Product</h2>
-                    <p className="text-zinc-500 text-sm">Fill in the technical specifications for {mainCategory.toLowerCase()}.</p>
+                <header className="p-6 border-b border-zinc-800 bg-zinc-900/50 flex justify-between items-center">
+                    <div>
+                        <h2 className="text-xl font-bold italic text-yellow-400 uppercase tracking-tighter">
+                            {initialData ? 'Edit' : 'Add'} {mainCategory} Product
+                        </h2>
+                        <p className="text-zinc-500 text-sm">Fill in the technical specifications for {mainCategory.toLowerCase()}.</p>
+                    </div>
+                    {onCancel && (
+                        <button onClick={onCancel} className="text-zinc-500 hover:text-white transition-colors">
+                            <X size={24} />
+                        </button>
+                    )}
                 </header>
 
                 <form onSubmit={handleSubmit} className="p-8 space-y-8">
@@ -108,6 +147,7 @@ export function CategoryProductForm({ mainCategory }: Props) {
                                 <label className="text-[10px] font-bold text-zinc-400 tracking-widest uppercase">Product Name</label>
                                 <Input
                                     name="name"
+                                    defaultValue={initialData?.name}
                                     placeholder="e.g. DARK CORE RGB PRO"
                                     className="bg-zinc-950 border-zinc-800 h-12 text-white"
                                     required
@@ -118,6 +158,7 @@ export function CategoryProductForm({ mainCategory }: Props) {
                                 <Input
                                     name="price"
                                     type="number"
+                                    defaultValue={initialData?.price}
                                     placeholder="22,397"
                                     className="bg-zinc-950 border-zinc-800 h-12 text-white"
                                     required
@@ -149,11 +190,13 @@ export function CategoryProductForm({ mainCategory }: Props) {
                                         accept="image/*"
                                         onChange={(e) => setFile(e.target.files?.[0] || null)}
                                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                                        required
+                                        required={!initialData}
                                     />
                                     <div className="border-2 border-dashed border-zinc-800 rounded-xl p-8 flex flex-col items-center justify-center gap-2 group-hover:border-yellow-400/50 transition-all bg-zinc-950/50">
                                         <Plus className="text-zinc-500 group-hover:text-yellow-400 transition-colors" size={32} />
-                                        <span className="text-xs text-zinc-500">{file ? file.name : 'Upload Product Photo'}</span>
+                                        <span className="text-xs text-zinc-500 overflow-hidden text-ellipsis whitespace-nowrap max-w-full px-2">
+                                            {file ? file.name : (initialData ? 'Click to change image' : 'Upload Product Photo')}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -161,6 +204,7 @@ export function CategoryProductForm({ mainCategory }: Props) {
                                 <label className="text-[10px] font-bold text-zinc-400 tracking-widest uppercase">Badge (Optional)</label>
                                 <Input
                                     name="badge"
+                                    defaultValue={initialData?.badge}
                                     placeholder="e.g. New, Bestseller"
                                     className="bg-zinc-950 border-zinc-800 h-12 text-white"
                                 />
@@ -174,6 +218,7 @@ export function CategoryProductForm({ mainCategory }: Props) {
                         <textarea
                             name="description"
                             rows={3}
+                            defaultValue={initialData?.description}
                             className="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-4 text-sm text-white focus:border-yellow-400 outline-none transition-all"
                             placeholder="Provide a detailed description of the product..."
                             required
@@ -210,6 +255,7 @@ export function CategoryProductForm({ mainCategory }: Props) {
                                     <input 
                                         type="checkbox" 
                                         name="isFeatured"
+                                        defaultChecked={initialData?.isFeatured}
                                         className="w-4 h-4 rounded border-zinc-800 bg-zinc-950 text-yellow-400 focus:ring-yellow-400"
                                     />
                                     <span className="text-xs text-zinc-400 group-hover:text-zinc-200 transition-colors">Featured</span>
@@ -232,6 +278,7 @@ export function CategoryProductForm({ mainCategory }: Props) {
                                 <textarea
                                     name="guideContent"
                                     rows={4}
+                                    defaultValue={initialData?.guideContent}
                                     className="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-4 text-sm text-white focus:border-yellow-400 outline-none transition-all"
                                     placeholder="Write the guide/review content here..."
                                 />
@@ -247,10 +294,10 @@ export function CategoryProductForm({ mainCategory }: Props) {
                         {loading ? (
                             <>
                                 <Loader2 className="animate-spin" size={18} />
-                                Creating Product...
+                                {initialData ? 'Updating' : 'Creating'} Product...
                             </>
                         ) : (
-                            'Create and Save Product'
+                            initialData ? 'Update Product' : 'Create and Save Product'
                         )}
                     </button>
                 </form>

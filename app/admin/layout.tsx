@@ -37,10 +37,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     const navItems = [
         { label: 'Dashboard', href: '/admin', icon: LayoutDashboard, category: 'Overview' },
-        { label: 'All Products', href: '/admin/products', icon: Package, category: 'Inventory' },
-        { label: 'Gaming Gear', href: '/admin/products/gaming-gear', icon: Cpu, isSub: true },
-        { label: 'Gaming PCs', href: '/admin/products/gaming-pc', icon: Monitor, isSub: true },
-        { label: 'Furniture', href: '/admin/products/gaming-furniture', icon: Armchair, isSub: true },
+        { label: 'Gaming Gear', href: '/admin/products/gaming-gear', icon: Cpu, category: 'Inventory' },
+        { label: 'Gaming PCs', href: '/admin/products/gaming-pc', icon: Monitor },
+        { label: 'Furniture', href: '/admin/products/gaming-furniture', icon: Armchair },
         { label: 'Customers', href: '/admin/users', icon: Users, category: 'Management' },
         { label: 'Admin Users', href: '/admin/admins', icon: UserCheck },
         { label: 'Guides', href: '/admin/guides', icon: BookOpen },

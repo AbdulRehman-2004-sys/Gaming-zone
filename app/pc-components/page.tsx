@@ -57,7 +57,7 @@ const features = [
     {
         title: "UNMATCHED THERMAL PERFORMANCE",
         description: "Keep your high-performance components cool under pressure with our advanced liquid and air cooling solutions. Engineered for maximum airflow and minimal noise.",
-        image: "/new-images/pc-components/cooling.jpeg",
+        image: "/new-images/pc-components/cooling-2.jpeg",
     },
     {
         title: "POWER YOUR AMBITION",

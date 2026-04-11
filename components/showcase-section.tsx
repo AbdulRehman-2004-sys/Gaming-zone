@@ -7,14 +7,14 @@ export function ShowcaseSection() {
       title: 'SABRE v2 PRO CF',
       subtitle: 'CARBON FIBER UNREADY',
       description: 'Professional gaming mouse',
-      image: '/img/rgb-gaming-mouse-advanced-design-neon-lights_84443-51580.jpg',
+      image: 'new-images/gaming-gear/mouse.jpeg',
     },
     {
       id: 2,
       title: 'NUKA COLA',
       subtitle: 'WASTELANDER-APPROVED',
       description: 'Limited edition collection',
-      image: '/img/gamepad-game-controller-icon-isolated-3d-render-illustration_47987-6409.jpg',
+      image: 'new-images/gaming-gear/controllers.jpeg',
     },
   ];
 
