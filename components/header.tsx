@@ -53,7 +53,7 @@ export function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 bg-black border-b border-yellow-400/30 z-50 w-screen">
+      <header className="fixed top-0 left-0 right-0 bg-black border-b border-yellow-400/30 z-[100] w-full">
         <div className="w-full px-4 sm:px-6 md:px-8">
           {/* Top bar */}
           <div className="flex items-center justify-between h-14 sm:h-16 md:h-16 lg:justify-center lg:gap-0">

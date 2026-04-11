@@ -96,12 +96,12 @@ export function MegaMenu() {
       </button>
 
       {/* Full-Width Mega Menu Dropdown */}
-      <div className="opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 fixed top-[56px] sm:top-[64px] left-1/2 -translate-x-1/2 w-[95vw] max-w-7xl">
-        {/* Backdrop */}
-        <div className="fixed inset-0 bg-black/30 backdrop-blur-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible -z-10" />
+      <div className="opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-[90] fixed top-[56px] sm:top-[64px] left-0 w-screen h-[calc(100vh-56px)] sm:h-[calc(100vh-64px)] overflow-hidden">
+        {/* Backdrop overlay - starts below header */}
+        <div className="fixed inset-0 top-[56px] sm:top-[64px] bg-black/60 backdrop-blur-md opacity-0 invisible group-hover:opacity-100 group-hover:visible -z-10 transition-opacity duration-300" />
 
-        {/* Content - centered and constrained */}
-        <div className="relative bg-black border-t-2 border-yellow-400 shadow-2xl rounded-b-xl overflow-hidden min-h-[400px]">
+        {/* Content - full height background */}
+        <div className="relative bg-black border-t border-yellow-400/30 shadow-2xl h-full overflow-y-auto custom-scrollbar">
           {/* Background Image */}
           <div className="absolute inset-0 opacity-20 pointer-events-none">
             <Image
