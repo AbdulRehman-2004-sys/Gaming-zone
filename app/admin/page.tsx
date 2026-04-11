@@ -13,7 +13,7 @@ export default function AdminDashboard() {
 
     return (
         <div className="flex flex-col gap-8">
-            <header className="flex justify-between items-end">
+            <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight">Overview</h1>
                     <p className="text-zinc-500 mt-1">Welcome back, {user?.name}.</p>

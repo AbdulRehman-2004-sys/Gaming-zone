@@ -209,7 +209,7 @@ export default function AdminGuides() {
                         <div className="p-6 overflow-y-auto space-y-6">
                             {!targetProduct ? (
                                 <div className="space-y-4">
-                                    <div className="flex items-center gap-4">
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                                         <div className="flex-1 relative">
                                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={16} />
                                             <Input 
@@ -254,7 +254,7 @@ export default function AdminGuides() {
                                 </div>
                             ) : (
                                 <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
-                                    <div className="flex items-center gap-4 p-4 bg-zinc-950 rounded-2xl border border-yellow-400/20">
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-4 p-4 bg-zinc-950 rounded-2xl border border-yellow-400/20">
                                         <div className="w-16 h-16 bg-zinc-900 rounded-xl p-2 relative overflow-hidden shrink-0">
                                             <Image src={targetProduct.image} alt={targetProduct.name} fill className="object-contain" />
                                         </div>

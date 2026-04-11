@@ -200,12 +200,12 @@ export function CategoryProductForm({ mainCategory }: Props) {
 
                     {/* Guides & Features Section */}
                     <div className="p-6 bg-zinc-950 rounded-2xl border border-zinc-800 space-y-6">
-                         <div className="flex items-center justify-between">
+                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                             <div className="space-y-1">
                                 <h3 className="text-xs font-bold text-yellow-400 uppercase tracking-widest">Guide & Promotion</h3>
                                 <p className="text-[10px] text-zinc-500">Configure how this product appears on special pages.</p>
                             </div>
-                            <div className="flex items-center gap-6">
+                            <div className="flex flex-wrap items-center gap-4 sm:gap-6">
                                 <label className="flex items-center gap-2 cursor-pointer group">
                                     <input 
                                         type="checkbox" 

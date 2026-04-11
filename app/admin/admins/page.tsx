@@ -61,7 +61,7 @@ export default function AdminsPage() {
 
     return (
         <div className="space-y-8">
-            <header className="flex justify-between items-end">
+            <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight text-white">Admin Users</h1>
                     <p className="text-zinc-500 mt-1">Manage users with administrative access to the dashboard.</p>
@@ -82,7 +82,7 @@ export default function AdminsPage() {
                     </div>
                 ) : (
                     <div className="overflow-x-auto">
-                        <table className="w-full text-left">
+                        <table className="w-full text-left min-w-[800px]">
                             <thead className="bg-zinc-800/50 border-b border-zinc-800">
                                 <tr>
                                     <th className="px-6 py-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Admin Name</th>

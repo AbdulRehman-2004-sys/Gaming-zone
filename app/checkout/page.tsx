@@ -1,15 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
-import { CreditCard, CheckCircle, ArrowLeft, Loader2, ShieldCheck, Truck, Package } from 'lucide-react';
+import { CreditCard, CheckCircle, ArrowLeft, Loader2, ShieldCheck, Truck, Package, Banknote, Building2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { redirect, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { getSettings } from '@/lib/actions/settings';
 
 export default function CheckoutPage() {
   const { user, loading } = useAuth();

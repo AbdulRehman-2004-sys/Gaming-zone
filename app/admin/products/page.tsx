@@ -137,7 +137,7 @@ export default function AdminProducts() {
 
     return (
         <div className="flex flex-col gap-8">
-            <header className="flex justify-between items-end">
+            <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight">Products Management</h1>
                     <p className="text-zinc-500 mt-1">Manage your storefront's product catalog and add new items by category.</p>
@@ -182,7 +182,7 @@ export default function AdminProducts() {
             </div>
 
             {/* Filters & Search */}
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-4">
                 <div className="relative flex-1">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={18} />
                     <Input
