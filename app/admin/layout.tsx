@@ -4,7 +4,7 @@ import React from 'react';
 import { 
     LayoutDashboard, Package, Settings, Users, 
     Monitor, Cpu, Armchair, BookOpen, CreditCard, UserCheck,
-    LogOut, Menu, X
+    LogOut, Menu, X, UserPlus, MessageSquare
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname, useRouter } from 'next/navigation';
@@ -41,6 +41,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         { label: 'Gaming PCs', href: '/admin/products/gaming-pc', icon: Monitor },
         { label: 'Furniture', href: '/admin/products/gaming-furniture', icon: Armchair },
         { label: 'Customers', href: '/admin/users', icon: Users, category: 'Management' },
+        { label: 'Subscribers', href: '/admin/subscribers', icon: UserPlus },
+        { label: 'Inquiries', href: '/admin/inquiries', icon: MessageSquare },
         { label: 'Admin Users', href: '/admin/admins', icon: UserCheck },
         { label: 'Guides', href: '/admin/guides', icon: BookOpen },
         { label: 'Payment', href: '/admin/settings/payment', icon: CreditCard, category: 'System' },

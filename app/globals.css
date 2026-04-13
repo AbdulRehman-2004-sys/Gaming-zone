@@ -227,3 +227,79 @@ body {
     cursor: pointer;
   }
 }
+
+/* Guide Content Rendering Styles */
+.guide-content-rendered {
+  line-height: 1.8;
+}
+
+.guide-content-rendered p {
+  margin-bottom: 1.5rem;
+}
+
+.guide-content-rendered ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 1.5rem;
+}
+
+.guide-content-rendered ul li {
+  position: relative;
+  padding-left: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.guide-content-rendered ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #facc15; /* Yellow-400 */
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.guide-content-rendered ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #facc15;
+}
+
+.guide-content-rendered ol li {
+  padding-left: 0.5rem;
+  margin-bottom: 0.75rem;
+  color: #d1d5db; /* gray-300 */
+}
+
+.guide-content-rendered h2, 
+.guide-content-rendered h3 {
+  color: #ffffff;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.025em;
+  margin-top: 2.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.guide-content-rendered h2 {
+  font-size: 1.875rem;
+}
+
+.guide-content-rendered h3 {
+  font-size: 1.5rem;
+}
+
+.guide-content-rendered strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.guide-content-rendered a {
+  color: #facc15;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.guide-content-rendered a:hover {
+  color: #ffffff;
+}

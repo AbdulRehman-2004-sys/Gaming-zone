@@ -1,10 +1,11 @@
 'use client';
-
+import React, { useState } from 'react';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
-import { useState } from 'react';
+import { submitInquiry } from '@/lib/actions/inquiry';
+import { toast } from 'react-toastify';
 
 export default function SupportPage() {
     const [formState, setFormState] = useState({
@@ -16,17 +17,26 @@ export default function SupportPage() {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
-        // Simulate API call
-        setTimeout(() => {
+        
+        try {
+            const result = await submitInquiry(formState);
+            if (result.success) {
+                toast.success(result.message);
+                setSubmitted(true);
+            } else {
+                toast.error(result.message);
+            }
+        } catch (error) {
+            toast.error("An unexpected error occurred. Please try again.");
+        } finally {
             setIsSubmitting(false);
-            setSubmitted(true);
-        }, 1500);
+        }
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setFormState({
             ...formState,
             [e.target.name]: e.target.value,
@@ -40,12 +50,12 @@ export default function SupportPage() {
             {/* Hero Section */}
             <section className="relative py-20 bg-gradient-to-b from-gray-900 to-black border-b border-yellow-400/20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 uppercase tracking-wider">
+                    <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white mb-6">
                         Contact <span className="text-yellow-400">Support</span>
                     </h1>
-                    <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto">
-                        Our dedicated team is here to help. Reach out to us for technical support,
-                        product inquiries, or just to say hello.
+                    <p className="text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
+                        Need assistance with your gear or have a question about our products? 
+                        Our elite support team is ready to help you optimize your gaming setup.
                     </p>
                 </div>
             </section>
@@ -57,13 +67,12 @@ export default function SupportPage() {
                     {/* Contact Information */}
                     <div className="space-y-12">
                         <div>
-                            <h2 className="text-2xl font-bold text-white mb-8 uppercase flex items-center gap-3">
-                                <span className="w-1 h-8 bg-yellow-400"></span>
-                                Get in Touch
+                            <h2 className="text-2xl font-black text-white mb-8 uppercase flex items-center gap-3 tracking-tight">
+                                <span className="w-1.5 h-8 bg-yellow-400"></span>
+                                Get In Touch
                             </h2>
-                            <p className="text-gray-400 mb-8 leading-relaxed">
-                                Whether you have a question about our products, need assistance with your order,
-                                or want to provide feedback, we're ready to assist you.
+                            <p className="text-zinc-400 mb-8 leading-relaxed text-lg">
+                                Whether you're tracking an order, need technical troubleshooting, or want to share feedback, we're committed to providing you with the best experience possible.
                             </p>
                         </div>
 

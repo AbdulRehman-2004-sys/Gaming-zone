@@ -13,7 +13,6 @@ const guidesCategories = [
             { name: 'Browse All Guides', href: '/guides' },
             { name: 'DIY Builder', href: '/guides/builder' },
             { name: 'Gaming & Furniture', href: '/guides/gamer' },
-            { name: 'Case Fans & Cooling', href: '/guides' },
         ],
     },
     {
@@ -22,8 +21,7 @@ const guidesCategories = [
         icon: <Monitor className="w-6 h-6" />,
         items: [
             { name: 'iCUE Guides', href: '/guides/software' },
-            { name: 'iCUE Lighting Profiles', href: '/guides/software' },
-            { name: 'Elgato Stream Deck', href: '/guides/software' },
+            { name: 'iCUE Lighting Profiles', href: '/guides/software' }
         ],
     },
 ];

@@ -1,9 +1,11 @@
 'use client';
-
+import React, { useState } from 'react';
 import { Mail, Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSettings } from "@/context/SettingsContext";
+import { subscribe } from '@/lib/actions/subscriber';
+import { toast } from 'react-toastify';
 
 const footerLinks = {
   products: [
@@ -34,6 +36,29 @@ const footerLinks = {
 
 export function Footer() {
   const settings = useSettings();
+  const [email, setEmail] = useState('');
+  const [isSubscribing, setIsSubscribing] = useState(false);
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    
+    setIsSubscribing(true);
+    try {
+      const result = await subscribe(email);
+      if (result.success) {
+        toast.success(result.message);
+        setEmail('');
+      } else {
+        toast.warning(result.message);
+      }
+    } catch (error) {
+      toast.error("Failed to subscribe. Please try again.");
+    } finally {
+      setIsSubscribing(false);
+    }
+  };
+
   return (
     <footer className="border-t-2 border-yellow-400 bg-black overflow-visible">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-12 sm:py-16 md:py-20 lg:py-24">
@@ -46,17 +71,30 @@ export function Footer() {
             <p className="text-xs sm:text-sm text-gray-300 mb-3 sm:mb-4 leading-relaxed">
               Subscribe for exclusive offers and gaming tips.
             </p>
-            <div className="w-full flex flex-col sm:flex-row gap-2">
+            <form onSubmit={handleSubscribe} className="w-full flex flex-col sm:flex-row gap-2">
               <input
                 type="email"
+                required
                 placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full sm:flex-1 px-3 py-2 bg-black border-2 border-yellow-400/30 focus:border-yellow-400 text-white text-xs sm:text-sm placeholder-gray-500 focus:outline-none transition-colors"
               />
-              <button className="w-full sm:w-auto px-4 sm:px-5 py-2 bg-yellow-400 text-black hover:bg-yellow-300 transition-colors font-semibold flex items-center justify-center gap-1.5 flex-shrink-0">
-                <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                <span className="text-xs sm:text-sm">Sub</span>
+              <button 
+                type="submit"
+                disabled={isSubscribing}
+                className="w-full sm:w-auto px-4 sm:px-5 py-2 bg-yellow-400 text-black hover:bg-yellow-300 transition-colors font-semibold flex items-center justify-center gap-1.5 flex-shrink-0 disabled:opacity-50"
+              >
+                {isSubscribing ? (
+                  <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
+                ) : (
+                  <>
+                    <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                    <span className="text-xs sm:text-sm">Sub</span>
+                  </>
+                )}
               </button>
-            </div>
+            </form>
           </div>
         </div>
 

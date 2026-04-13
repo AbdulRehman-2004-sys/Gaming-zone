@@ -172,7 +172,7 @@ export function Header() {
             <nav className="lg:hidden border-t border-yellow-400/30 pb-3 sm:pb-4 max-h-[calc(100vh-56px)] sm:max-h-[calc(100vh-64px)] overflow-y-auto">
               <MegaMenuMobile />
               <GuidesMegaMenuMobile />
-              <SoftwareMegaMenuMobile />
+              {/*<SoftwareMegaMenuMobile />*/}
               <div className="py-2 sm:py-3 space-y-1 sm:space-y-2">
                 <Link href="/support" className="block text-white text-xs sm:text-sm hover:text-yellow-400 transition-colors font-medium uppercase tracking-wider px-4 py-2">
                   Support
