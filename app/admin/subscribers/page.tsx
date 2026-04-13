@@ -65,10 +65,7 @@ export default async function SubscribersPage() {
                                             </div>
                                         </td>
                                         <td className="px-6 py-5 text-right">
-                                            <form action={async () => {
-                                                "use server";
-                                                await deleteSubscriber(sub._id);
-                                            }}>
+                                            <form action={deleteSubscriber.bind(null, sub._id)}>
                                                 <button className="p-2 text-zinc-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-all">
                                                     <Trash2 size={16} />
                                                 </button>

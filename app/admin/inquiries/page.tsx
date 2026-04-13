@@ -62,7 +62,7 @@ export default async function InquiriesPage() {
                                     <div className="flex items-center gap-4 text-[10px] font-bold text-zinc-500 uppercase tracking-widest pt-2">
                                         <div className="flex items-center gap-1.5">
                                             <Calendar size={12} className="text-yellow-400/50" />
-                                            {new Date(inquiry.createdAt).toLocaleString()}
+                                            {new Date(inquiry.createdAt).toLocaleString('en-US')}
                                         </div>
                                         <div className="flex items-center gap-1.5">
                                             <CheckCircle2 size={12} className={inquiry.status === 'read' ? 'text-green-500' : 'text-zinc-700'} />
@@ -73,20 +73,14 @@ export default async function InquiriesPage() {
 
                                 <div className="flex md:flex-col gap-2">
                                     {inquiry.status === 'unread' && (
-                                        <form action={async () => {
-                                            "use server";
-                                            await markAsRead(inquiry._id);
-                                        }}>
+                                        <form action={markAsRead.bind(null, inquiry._id)}>
                                             <button className="flex items-center justify-center gap-2 px-4 py-2 bg-yellow-400 text-black rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-yellow-300 transition-all">
                                                 <CheckCircle2 size={14} />
                                                 <span>Mark Read</span>
                                             </button>
                                         </form>
                                     )}
-                                    <form action={async () => {
-                                        "use server";
-                                        await deleteInquiry(inquiry._id);
-                                    }}>
+                                    <form action={deleteInquiry.bind(null, inquiry._id)}>
                                         <button className="flex items-center justify-center gap-2 px-4 py-2 border border-zinc-800 text-zinc-500 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-red-400/10 hover:text-red-400 hover:border-red-400/30 transition-all">
                                             <Trash2 size={14} />
                                             <span>Delete</span>

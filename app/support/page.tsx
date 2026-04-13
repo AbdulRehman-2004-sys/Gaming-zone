@@ -3,8 +3,11 @@ import React, { useState } from 'react';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { Button } from '@/components/ui/button';
-import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
-import { submitInquiry } from '@/lib/actions/inquiry';
+import { 
+    MapPin, Phone, Mail, Clock, Send, 
+    Search, History, CheckCircle2, AlertCircle 
+} from 'lucide-react';
+import { submitInquiry, getInquiriesByEmail } from '@/lib/actions/inquiry';
 import { toast } from 'react-toastify';
 
 export default function SupportPage() {
@@ -16,6 +19,28 @@ export default function SupportPage() {
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+
+    // Tracking State
+    const [trackEmail, setTrackEmail] = useState('');
+    const [isTracking, setIsTracking] = useState(false);
+    const [userTickets, setUserTickets] = useState<any[] | null>(null);
+
+    const handleTrack = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!trackEmail) return;
+        setIsTracking(true);
+        try {
+            const results = await getInquiriesByEmail(trackEmail);
+            setUserTickets(results);
+            if (results.length === 0) {
+                toast.info("No tickets found for this email address.");
+            }
+        } catch (error) {
+            toast.error("Error fetching status. Please try again.");
+        } finally {
+            setIsTracking(false);
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -221,6 +246,84 @@ export default function SupportPage() {
                                 </Button>
                             </form>
                         )}
+                    </div>
+                </div>
+
+                {/* Tracking Status Section */}
+                <div className="mt-24 pt-16 border-t border-zinc-800/50">
+                    <div className="max-w-3xl mx-auto text-center mb-12">
+                        <h2 className="text-3xl font-black uppercase tracking-tighter text-white mb-4">
+                            Track Your <span className="text-yellow-400">Inquiry</span>
+                        </h2>
+                        <p className="text-zinc-400">
+                            Enter the email address you used to contact us to see the current status of your tickets.
+                        </p>
+                    </div>
+
+                    <div className="max-w-xl mx-auto">
+                        <form onSubmit={handleTrack} className="flex gap-2 p-2 bg-zinc-900 border border-zinc-800 rounded-2xl mb-12 focus-within:border-yellow-400/50 transition-all">
+                            <div className="flex-1 flex items-center px-4">
+                                <Search className="w-5 h-5 text-zinc-500 mr-3" />
+                                <input
+                                    type="email"
+                                    required
+                                    placeholder="Enter your email address..."
+                                    value={trackEmail}
+                                    onChange={(e) => setTrackEmail(e.target.value)}
+                                    className="w-full bg-transparent border-none text-white focus:outline-none placeholder-zinc-600 text-sm py-2"
+                                />
+                            </div>
+                            <Button 
+                                type="submit" 
+                                disabled={isTracking}
+                                className="bg-yellow-400 text-black hover:bg-yellow-300 font-bold px-8 rounded-xl h-12 uppercase tracking-tight disabled:opacity-50"
+                            >
+                                {isTracking ? 'Searching...' : 'Track Ticket'}
+                            </Button>
+                        </form>
+
+                        {/* Results */}
+                        <div className="space-y-4">
+                            {userTickets && userTickets.length > 0 ? (
+                                userTickets.map((ticket, idx) => (
+                                    <div key={ticket._id} className="bg-zinc-900/40 border border-zinc-800/50 rounded-2xl p-6 backdrop-blur-sm animate-in fade-in slide-in-from-bottom-4 duration-500" style={{ animationDelay: `${idx * 100}ms` }}>
+                                        <div className="flex items-start justify-between gap-4">
+                                            <div>
+                                                <div className="flex items-center gap-2 mb-2">
+                                                    <History className="w-4 h-4 text-yellow-400/50" />
+                                                    <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">
+                                                        Ticket ID: {ticket._id.slice(-6).toUpperCase()}
+                                                    </span>
+                                                </div>
+                                                <h3 className="text-white font-bold leading-tight mb-1">{ticket.subject}</h3>
+                                                <p className="text-zinc-500 text-xs line-clamp-1">{ticket.message}</p>
+                                            </div>
+                                            <div className="flex flex-col items-end gap-2">
+                                                {ticket.status === 'read' ? (
+                                                    <span className="flex items-center gap-1.5 px-3 py-1 bg-green-500/10 text-green-500 rounded-full text-[10px] font-black uppercase tracking-widest">
+                                                        <CheckCircle2 size={10} />
+                                                        In Review
+                                                    </span>
+                                                ) : (
+                                                    <span className="flex items-center gap-1.5 px-3 py-1 bg-yellow-400/10 text-yellow-400 rounded-full text-[10px] font-black uppercase tracking-widest">
+                                                        <Clock size={10} className="animate-pulse" />
+                                                        Received
+                                                    </span>
+                                                )}
+                                                <span className="text-[9px] text-zinc-600 font-bold">
+                                                    {new Date(ticket.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))
+                            ) : userTickets && (
+                                <div className="text-center py-12 bg-zinc-900/20 border border-dashed border-zinc-900 rounded-3xl">
+                                    <AlertCircle className="w-8 h-8 text-zinc-700 mx-auto mb-3" />
+                                    <p className="text-zinc-600 text-sm font-medium italic">No tickets found for this address.</p>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

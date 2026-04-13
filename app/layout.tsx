@@ -50,7 +50,7 @@ export default async function RootLayout({
       // @ts-ignore
       '--primary-color': primaryColor
     }}>
-      <body className="font-sans antialiased overflow-x-hidden w-full max-w-full bg-zinc-950">
+      <body suppressHydrationWarning className="font-sans antialiased overflow-x-hidden w-full max-w-full bg-zinc-950">
         <SettingsProvider settings={settings}>
           <AuthProvider>
             <CartProvider>
