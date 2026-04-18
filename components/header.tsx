@@ -6,13 +6,13 @@ import { Search, Menu, X, ShoppingCart, User as UserIcon, LogOut, LayoutDashboar
 import Image from 'next/image';
 import { MegaMenu, MegaMenuMobile } from './mega-menu';
 import { GuidesMegaMenu, GuidesMegaMenuMobile } from './guides-mega-menu';
-import { SoftwareMegaMenu, SoftwareMegaMenuMobile } from './software-mega-menu';
 import { useSettings } from "@/context/SettingsContext";
 import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
 import { logout } from "@/lib/actions/auth";
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
+import { searchProductsRegex } from "@/lib/actions/product";
 
 export function Header() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -23,15 +23,44 @@ export function Header() {
   const settings = useSettings();
   const router = useRouter();
 
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsDropdownOpen(false);
       }
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
+        setIsSearchOpen(false);
+      }
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    const fetchSuggestions = async () => {
+      if (!searchQuery.trim()) {
+        setSuggestions([]);
+        return;
+      }
+      setIsSearching(true);
+      const results = await searchProductsRegex(searchQuery);
+      setSuggestions(results);
+      setIsSearching(false);
+    };
+
+    const delayDebounceFn = setTimeout(() => {
+      fetchSuggestions();
+    }, 300);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchQuery]);
 
   const handleLogout = async () => {
     const res = await logout();
@@ -73,7 +102,6 @@ export function Header() {
             <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
               <MegaMenu />
               <GuidesMegaMenu />
-              {/*<SoftwareMegaMenu />*/}
               <Link href="/support" className="text-white text-xs xl:text-sm hover:text-yellow-400 transition-colors font-medium uppercase tracking-wider">
                 Support
               </Link>
@@ -92,9 +120,84 @@ export function Header() {
                 </Link>
               )}
 
-              <button className="text-white hover:text-yellow-400 transition-colors p-2 flex-shrink-0">
-                <Search className="w-4 h-4 sm:w-5 sm:h-5" />
-              </button>
+              <div className="relative flex items-center" ref={searchContainerRef}>
+                <button
+                  onClick={() => {
+                    setIsSearchOpen(!isSearchOpen);
+                    if (!isSearchOpen) {
+                      setTimeout(() => searchInputRef.current?.focus(), 100);
+                    }
+                  }}
+                  className="text-white hover:text-yellow-400 transition-colors p-2 flex-shrink-0"
+                >
+                  <Search className="w-4 h-4 sm:w-5 sm:h-5" />
+                </button>
+
+                {isSearchOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-[calc(100vw-32px)] sm:w-80 bg-black border border-zinc-800 rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200" style={{ maxWidth: '400px' }}>
+                    <form 
+                      onSubmit={(e) => {
+                         e.preventDefault();
+                         if(searchQuery.trim()){
+                             setIsSearchOpen(false);
+                             router.push(`/shop?q=${encodeURIComponent(searchQuery.trim())}`);
+                         }
+                      }}
+                      className="flex items-center p-2 border-b border-zinc-800 bg-zinc-900"
+                    >
+                      <Search className="w-4 h-4 text-zinc-500 ml-2" />
+                      <input
+                        ref={searchInputRef}
+                        type="text"
+                        placeholder="Search products..."
+                        className="w-full bg-transparent text-white px-3 py-1.5 text-sm focus:outline-none"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                      />
+                      {isSearching && <div className="w-4 h-4 border-2 border-yellow-400 border-t-transparent rounded-full animate-spin mr-2"></div>}
+                    </form>
+
+                    {searchQuery.trim() && (
+                      <div className="max-h-64 overflow-y-auto">
+                        {suggestions.length > 0 ? (
+                          <div className="py-2">
+                            {suggestions.map((p) => (
+                              <Link 
+                                key={p._id} 
+                                href={`/products/${p.slug}`}
+                                onClick={() => setIsSearchOpen(false)}
+                                className="flex items-center gap-3 px-4 py-2 hover:bg-zinc-900 transition-colors group"
+                              >
+                                <div className="w-10 h-10 bg-zinc-800 rounded overflow-hidden relative flex-shrink-0">
+                                  <Image src={p.image || "/placeholder.png"} fill alt={p.name} className="object-cover" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-white text-xs font-bold truncate group-hover:text-yellow-400">{p.name}</p>
+                                  <p className="text-zinc-500 text-[10px] truncate">{p.category}</p>
+                                </div>
+                                <div className="text-yellow-400 text-xs font-bold whitespace-nowrap">
+                                  Rs.{p.price}
+                                </div>
+                              </Link>
+                            ))}
+                            <Link 
+                               href={`/shop?q=${encodeURIComponent(searchQuery.trim())}`}
+                               onClick={() => setIsSearchOpen(false)}
+                               className="block text-center text-xs text-yellow-400 px-4 py-3 hover:bg-yellow-400 hover:text-black font-bold transition-colors border-t border-zinc-800"
+                            >
+                               View All Results
+                            </Link>
+                          </div>
+                        ) : !isSearching ? (
+                          <div className="p-4 text-center text-xs text-zinc-500">
+                            No products found.
+                          </div>
+                        ) : null}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
 
               <div className="hidden md:flex items-center gap-2 lg:gap-3 min-w-[120px] justify-end">
                 {loading ? (
@@ -172,7 +275,6 @@ export function Header() {
             <nav className="lg:hidden border-t border-yellow-400/30 pb-3 sm:pb-4 max-h-[calc(100vh-56px)] sm:max-h-[calc(100vh-64px)] overflow-y-auto">
               <MegaMenuMobile />
               <GuidesMegaMenuMobile />
-              {/*<SoftwareMegaMenuMobile />*/}
               <div className="py-2 sm:py-3 space-y-1 sm:space-y-2">
                 <Link href="/support" className="block text-white text-xs sm:text-sm hover:text-yellow-400 transition-colors font-medium uppercase tracking-wider px-4 py-2">
                   Support

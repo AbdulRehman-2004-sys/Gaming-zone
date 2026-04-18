@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export function ShowcaseSection() {
   const showcases = [
@@ -8,6 +9,7 @@ export function ShowcaseSection() {
       subtitle: 'CARBON FIBER UNREADY',
       description: 'Professional gaming mouse',
       image: 'new-images/gaming-gear/mouse.jpeg',
+      link: '/shop?q=mouse'
     },
     {
       id: 2,
@@ -15,6 +17,7 @@ export function ShowcaseSection() {
       subtitle: 'WASTELANDER-APPROVED',
       description: 'Limited edition collection',
       image: 'new-images/gaming-gear/controllers.jpeg',
+      link: '/shop?q=controllers'
     },
   ];
 
@@ -23,14 +26,15 @@ export function ShowcaseSection() {
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           {showcases.map((item, idx) => (
-            <div
+            <Link
+              href={item.link}
               key={item.id}
               className="relative group overflow-hidden h-64 sm:h-72 md:h-96 bg-gray-900 border border-yellow-400/20 hover:border-yellow-400/50 transition-all duration-300 rounded-xl"
             >
               {/* Background Image */}
               <div className="absolute inset-0 z-0">
                 <Image
-                  src={item.image}
+                  src={'/' + item.image}
                   alt={item.title}
                   fill
                   className="object-cover opacity-60 group-hover:scale-110 transition-transform duration-700"
@@ -52,7 +56,7 @@ export function ShowcaseSection() {
                   SHOP NOW
                 </button>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

@@ -54,7 +54,7 @@ export function GuidesSection() {
             </p>
           </div>
           <Link
-            href="#"
+            href="/guides"
             className="mt-4 md:mt-0 text-yellow-400 font-bold hover:text-yellow-300 transition-colors inline-flex items-center gap-2"
           >
             View All Articles
@@ -67,7 +67,7 @@ export function GuidesSection() {
           {guides.map((guide) => (
             <Link
               key={guide.id}
-              href="#"
+              href={`/guides/${guide.id}`}
               className="group bg-gradient-to-br from-gray-900 to-black border border-yellow-400/20 rounded-lg overflow-hidden hover:border-yellow-400/50 transition-all duration-300 flex flex-col"
             >
               {/* Image */}

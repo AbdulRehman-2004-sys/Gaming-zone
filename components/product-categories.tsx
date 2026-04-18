@@ -1,16 +1,18 @@
 'use client';
 
+import Link from 'next/link';
+
 const categories = [
-  { name: 'CASES', icon: '📦' },
-  { name: 'GAMING PCs', icon: '🖥️' },
-  { name: 'MEMORY', icon: '⚡' },
-  { name: 'KEYBOARDS', icon: '⌨️' },
-  { name: 'HEADSETS', icon: '🎧' },
-  { name: 'POWER SUPPLIES', icon: '🔌' },
-  { name: 'COOLERS', icon: '❄️' },
-  { name: 'GAMING MICE', icon: '🖱️' },
-  { name: 'FANS', icon: '🌀' },
-  { name: 'FURNITURE', icon: '🪑' },
+  { name: 'CASES', icon: '📦', link: '/pc-components' },
+  { name: 'GAMING PCs', icon: '🖥️', link: '/shop?q=gaming pcs' },
+  { name: 'MEMORY', icon: '⚡', link: '/shop?q=memory' },
+  { name: 'KEYBOARDS', icon: '⌨️', link: '/shop?q=keyboards' },
+  { name: 'HEADSETS', icon: '🎧', link: '/shop?q=headsets' },
+  { name: 'POWER SUPPLIES', icon: '🔌', link: '/shop?q=power' },
+  { name: 'COOLERS', icon: '❄️', link: '/shop?q=cooling' },
+  { name: 'GAMING MICE', icon: '🖱️', link: '/shop?q=mice' },
+  { name: 'FANS', icon: '🌀', link: '/shop?q=fans' },
+  { name: 'FURNITURE', icon: '🪑', link: '/shop?q=furniture' },
 ];
 
 export function ProductCategories() {
@@ -21,9 +23,10 @@ export function ProductCategories() {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-5">
           {categories.map((category, index) => (
-            <button
+            <Link
+              href={category.link}
               key={index}
-              className="group relative p-4 sm:p-5 md:p-6 bg-black border-2 border-yellow-400/30 hover:border-yellow-400 transition-all duration-300 cursor-pointer hover:bg-yellow-400/5 w-full"
+              className="group relative p-4 sm:p-5 md:p-6 bg-black border-2 border-yellow-400/30 hover:border-yellow-400 transition-all duration-300 cursor-pointer hover:bg-yellow-400/5 w-full flex flex-col items-center"
             >
               {/* Content */}
               <div className="relative space-y-2 sm:space-y-3 text-center">
@@ -32,7 +35,7 @@ export function ProductCategories() {
                   {category.name}
                 </h3>
               </div>
-            </button>
+            </Link>
           ))}
         </div>
       </div>

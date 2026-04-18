@@ -18,7 +18,7 @@ const featuredProducts = [
     name: 'VOYAGER a1600 Edition',
     category: 'Gaming Laptop',
     price: 'Rs. 559,997',
-    image: 'home/pc.jpeg',
+    image: '/home/pc.jpeg',
     badge: 'Mobile Powerhouse',
     description: 'Experience desktop-class performance in a thin, light portable form factor.'
   },
@@ -27,7 +27,7 @@ const featuredProducts = [
     name: 'XENEON FLEX 45WQHD240 OLED',
     category: 'Gaming Monitor',
     price: 'Rs. 447,997',
-    image: 'home/gaming-pc.jpeg',
+    image: '/home/gaming-pc.jpeg',
     badge: 'Revolutionary',
     description: 'The world\'s first bendable 45-inch OLED gaming monitor with 240Hz refresh rate.'
   },

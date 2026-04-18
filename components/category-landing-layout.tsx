@@ -76,13 +76,7 @@ export function CategoryLandingLayout({ hero, shortcuts, features, featuredProdu
                     <p className="text-lg md:text-xl text-gray-300 font-medium uppercase tracking-widest max-w-3xl mx-auto">
                         {hero.subtitle}
                     </p>
-                    <div className="pt-8">
-                        <Link href={hero.ctaHref}>
-                            <Button className="bg-yellow-400 text-black font-black uppercase tracking-widest hover:bg-white transition-all transform hover:scale-105 px-10 py-8 text-lg rounded-none">
-                                {hero.ctaText}
-                            </Button>
-                        </Link>
-                    </div>
+
                 </div>
             </section>
 
@@ -119,11 +113,7 @@ export function CategoryLandingLayout({ hero, shortcuts, features, featuredProdu
                                     Explore our hand-picked selection of high-performance gear designed for elite players.
                                 </p>
                             </div>
-                            <Link href={hero.ctaHref}>
-                                <Button variant="link" className="text-yellow-400 font-bold uppercase tracking-widest p-0 flex items-center gap-2 group">
-                                    Shop All Collection <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                </Button>
-                            </Link>
+                           
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -187,11 +177,7 @@ export function CategoryLandingLayout({ hero, shortcuts, features, featuredProdu
                                 <p className="text-gray-400 text-lg leading-relaxed max-w-xl">
                                     {feature.description}
                                 </p>
-                                <div className="pt-4">
-                                    <Button variant="outline" className="border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black rounded-none uppercase font-bold tracking-widest transition-all">
-                                        LEARN MORE <ChevronRight className="ml-2 w-4 h-4" />
-                                    </Button>
-                                </div>
+                               
                             </div>
                             <div className={cn("relative aspect-video rounded-none overflow-hidden shadow-2xl", feature.reversed ? 'order-1 lg:order-1' : 'order-1 lg:order-2')}>
                                 <Image

@@ -72,18 +72,7 @@ const menuCategories: MenuCategory[] = [
       { name: 'Stands', href: '/gaming-furniture/stands' },
       { name: 'Accessories', href: '/gaming-furniture/accessories' },
     ],
-  },
-  {
-    title: 'SHOP ALL',
-    href: '/products',
-    icon: <ShoppingCart className="w-8 h-8" />,
-    items: [
-      { name: 'New Products', href: '/products' },
-      { name: 'Featured', href: '/products' },
-      { name: 'Sale', href: '/products' },
-      { name: 'Clearance', href: '/products' },
-    ],
-  },
+  }
 ];
 
 export function MegaMenu() {
@@ -114,7 +103,7 @@ export function MegaMenu() {
 
           {/* Grid Container with proper spacing */}
           <div className="relative mx-auto max-w-7xl px-6 md:px-8 lg:px-12 py-12">
-            <div className="grid grid-cols-5 gap-12">
+            <div className="grid grid-cols-4 gap-12">
               {menuCategories.map((category, idx) => (
                 <div key={idx} className="flex flex-col">
                   {/* Category Icon and Title */}
@@ -157,7 +146,7 @@ export function MegaMenu() {
           {/* Bottom CTA Section */}
           <div className="relative bg-black/50 px-6 md:px-8 lg:px-12 py-6">
             <Link
-              href="/products"
+              href="/shop"
               className="text-yellow-400 font-bold text-sm uppercase tracking-wider hover:text-yellow-300 transition-colors inline-flex items-center gap-2"
             >
               View All Products

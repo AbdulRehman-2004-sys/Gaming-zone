@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 
 const footerLinks = {
   products: [
-    { name: 'Cases', href: '/pc-components/cases' },
+    { name: 'Cases', href: '/pc-components' },
     { name: 'Cooling', href: '/pc-components/cooling' },
     { name: 'Headsets', href: '/products/headsets' },
     { name: 'Keyboards', href: '/products/keyboards' },
@@ -17,20 +17,17 @@ const footerLinks = {
   ],
   company: [
     { name: 'About Us', href: '/support' },
-    { name: 'Careers', href: '#' },
-    { name: 'Press', href: '#' },
-    { name: 'Investors', href: '#' },
+    { name: 'Careers', href: '/company/careers' },
+    { name: 'Press', href: '/company/press' },
+    { name: 'Investors', href: '/company/investors' },
   ],
   support: [
     { name: 'Support', href: '/support' },
-    { name: 'Downloads', href: '/software' },
-    { name: 'Warranty', href: '/support' },
-    { name: 'RMA', href: '/support' },
   ],
   legal: [
-    { name: 'Privacy', href: '#' },
-    { name: 'Terms', href: '#' },
-    { name: 'Cookies', href: '#' },
+    { name: 'Privacy', href: '/legal/privacy' },
+    { name: 'Terms', href: '/legal/terms' },
+    { name: 'Cookies', href: '/legal/cookies' },
   ],
 };
 
@@ -180,16 +177,16 @@ export function Footer() {
               {settings?.footerText || `© ${new Date().getFullYear()} DROP ZONE.`}
             </p>
             <div className="flex items-center gap-3 sm:gap-4 order-1 sm:order-2">
-              <a href="#" className="text-gray-400 hover:text-yellow-400 transition-colors flex-shrink-0">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-yellow-400 transition-colors flex-shrink-0">
                 <Facebook className="h-4 w-4" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-yellow-400 transition-colors flex-shrink-0">
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-yellow-400 transition-colors flex-shrink-0">
                 <Twitter className="h-4 w-4" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-yellow-400 transition-colors flex-shrink-0">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-yellow-400 transition-colors flex-shrink-0">
                 <Instagram className="h-4 w-4" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-yellow-400 transition-colors flex-shrink-0">
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-yellow-400 transition-colors flex-shrink-0">
                 <Youtube className="h-4 w-4" />
               </a>
             </div>

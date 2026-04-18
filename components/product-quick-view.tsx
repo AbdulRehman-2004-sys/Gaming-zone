@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 
 export interface QuickViewProduct {
     id: number | string;
+    slug?: string;
     name: string;
     description: string;
     image: string;
@@ -149,6 +150,16 @@ export function ProductQuickView({ product, isOpen, onClose }: ProductQuickViewP
                             className="w-full bg-yellow-400 text-black hover:bg-yellow-300 font-bold py-6 text-lg uppercase tracking-wider"
                         >
                             Add to Cart
+                        </Button>
+                        <Button
+                            variant="outline"
+                            className="w-full border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black py-6 uppercase tracking-wider transition-colors"
+                            onClick={() => {
+                                handleClose();
+                                router.push(`/products/${product.slug || product.id}`);
+                            }}
+                        >
+                            View Full Details
                         </Button>
                         <Button
                             variant="outline"

@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export function KeyboardHeroSection() {
   return (
@@ -25,9 +26,11 @@ export function KeyboardHeroSection() {
           <Button className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-8 py-3 text-base">
             Shop All Keyboards
           </Button>
-          <Button variant="outline" className="border-yellow-400 text-yellow-400 hover:bg-yellow-400/10 font-bold px-8 py-3 text-base bg-transparent">
-            Learn More
-          </Button>
+          <Link href="/products/2">
+            <Button variant="outline" className="border-yellow-400 text-yellow-400 hover:bg-yellow-400/10 font-bold px-8 py-3 text-base bg-transparent">
+              Learn More
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

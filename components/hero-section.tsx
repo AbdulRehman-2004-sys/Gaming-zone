@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 
 export function HeroSection() {
   return (
@@ -17,9 +18,9 @@ export function HeroSection() {
           <p className="text-xs sm:text-sm md:text-base text-gray-300 tracking-widest uppercase mb-6 sm:mb-8 md:mb-10 px-4">
             Ultimate Gaming Keyboard With Mechanical Switches
           </p>
-          <button className="bg-yellow-400 text-black px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-3.5 text-xs sm:text-sm md:text-base font-bold hover:bg-yellow-300 transition-all transform hover:scale-105 mb-8 sm:mb-10 md:mb-12">
+          <Link href="/shop" className="inline-block bg-yellow-400 text-black px-6 sm:px-8 md:px-10 py-2.5 sm:py-3 md:py-3.5 text-xs sm:text-sm md:text-base font-bold hover:bg-yellow-300 transition-all transform hover:scale-105 mb-8 sm:mb-10 md:mb-12">
             SHOP NOW
-          </button>
+          </Link>
         </div>
 
         {/* Hero Product Image */}

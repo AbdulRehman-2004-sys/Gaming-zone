@@ -31,7 +31,6 @@ const categories = [
     { name: 'ALL', icon: <LayoutGrid className="w-8 h-8" />, href: '/guides' },
     { name: 'BUILDER', icon: <Cpu className="w-8 h-8" />, href: '/guides/builder' },
     { name: 'GAMER', icon: <Image src="/img/game-controller-illustration_23-2151602211.jpg" width={40} height={40} alt="Gamer" className="object-contain" />, href: '/guides/gamer' },
-    { name: 'SOFTWARE', icon: <Monitor className="w-8 h-8" />, href: '/guides/software' },
 ];
 
 const filterOptions = [
@@ -43,6 +42,7 @@ export function GuidesLayout({ title, category, articles = [] }: GuidesLayoutPro
     const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
     const [sortBy, setSortBy] = useState<'newest' | 'alphabetical'>('newest');
     const [currentPage, setCurrentPage] = useState(1);
+    const [showSuggestions, setShowSuggestions] = useState(false);
     const itemsPerPage = 6;
 
     const filteredArticles = useMemo(() => {
@@ -95,20 +95,49 @@ export function GuidesLayout({ title, category, articles = [] }: GuidesLayoutPro
                         Find the perfect parts for your build or explore expert guides
                     </p>
 
-                    <div className="relative max-w-2xl mx-auto">
+                    <div className="relative max-w-2xl mx-auto z-50">
                         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 w-6 h-6" />
                         <Input
                             placeholder="SEARCH"
                             value={searchQuery}
                             onChange={(e) => {
                                 setSearchQuery(e.target.value);
+                                setShowSuggestions(true);
                                 setCurrentPage(1);
                             }}
-                            className="w-full pl-14 pr-4 py-8 bg-white text-black text-lg font-bold border-none rounded-none focus-visible:ring-2 focus-visible:ring-yellow-400"
+                            onFocus={() => setShowSuggestions(true)}
+                            onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                            className="w-full pl-14 pr-4 py-8 bg-white text-black text-lg font-bold border-none rounded-none focus-visible:ring-2 focus-visible:ring-yellow-400 relative z-50"
                         />
-                        <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-black text-white p-4 hover:bg-yellow-400 hover:text-black transition-colors">
+                        <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-black text-white p-4 hover:bg-yellow-400 hover:text-black transition-colors z-50">
                             <Search className="w-6 h-6" />
                         </button>
+
+                        {/* Suggestions Dropdown */}
+                        {showSuggestions && searchQuery.trim() !== '' && (
+                            <div className="absolute top-[calc(100%+4px)] left-0 w-full bg-white text-black shadow-2xl overflow-y-auto max-h-80 z-[100] border-t-4 border-yellow-400">
+                                {filteredArticles.length > 0 ? (
+                                    filteredArticles.slice(0, 5).map(article => (
+                                        <div
+                                            key={article._id}
+                                            className="px-6 py-4 hover:bg-gray-100 hover:text-yellow-500 transition-colors cursor-pointer text-left border-b border-gray-100 last:border-b-0 flex items-center justify-between group"
+                                            onClick={() => {
+                                                setSearchQuery(article.name);
+                                                setShowSuggestions(false);
+                                                setCurrentPage(1);
+                                            }}
+                                        >
+                                            <span className="font-bold text-sm md:text-base truncate group-hover:text-yellow-600 pr-4">{article.name}</span>
+                                            <span className="text-[10px] uppercase text-gray-500 font-black bg-gray-100 px-2.5 py-1 rounded-sm shrink-0">{article.category}</span>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="px-6 py-4 text-sm font-bold text-gray-400 text-left uppercase tracking-widest">
+                                        No guides found
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -117,7 +146,7 @@ export function GuidesLayout({ title, category, articles = [] }: GuidesLayoutPro
                 <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-12 text-center">{category}</h2>
 
                 {/* Category Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 gap-1 mb-20 bg-gray-900 border border-gray-800">
+                <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-1 mb-20 bg-gray-900 border border-gray-800">
                     {categories.map((cat, idx) => (
                         <Link
                             key={idx}

@@ -1,6 +1,7 @@
 'use client';
 
 import React from "react"
+import Link from 'next/link';
 
 import { Keyboard, Radio, Zap, Settings, Wifi, RotateCcw } from 'lucide-react';
 
@@ -85,10 +86,10 @@ export function KeyFeatures() {
               </p>
 
               {/* Link */}
-              <a href="#" className="text-yellow-400 text-sm font-bold hover:text-yellow-300 transition-colors inline-flex items-center gap-2">
+              <Link href="/products/2" className="text-yellow-400 text-sm font-bold hover:text-yellow-300 transition-colors inline-flex items-center gap-2">
                 Learn More
                 <span>→</span>
-              </a>
+              </Link>
             </div>
           ))}
         </div>

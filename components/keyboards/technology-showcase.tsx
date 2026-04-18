@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 interface Technology {
   id: string;
@@ -110,9 +111,11 @@ export function TechnologyShowcase() {
                   ))}
                 </ul>
 
-                <Button className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold">
-                  Learn More
-                </Button>
+                <Link href={`/products/2`}>
+                  <Button className="bg-yellow-400 hover:bg-yellow-300 text-black font-bold">
+                    Learn More
+                  </Button>
+                </Link>
               </div>
 
               {/* Image */}

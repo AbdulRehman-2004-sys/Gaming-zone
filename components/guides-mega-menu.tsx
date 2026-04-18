@@ -14,16 +14,7 @@ const guidesCategories = [
             { name: 'DIY Builder', href: '/guides/builder' },
             { name: 'Gaming & Furniture', href: '/guides/gamer' },
         ],
-    },
-    {
-        title: 'SOFTWARE',
-        href: '/guides/software',
-        icon: <Monitor className="w-6 h-6" />,
-        items: [
-            { name: 'iCUE Guides', href: '/guides/software' },
-            { name: 'iCUE Lighting Profiles', href: '/guides/software' }
-        ],
-    },
+    }
 ];
 
 export function GuidesMegaMenu() {
@@ -112,7 +103,7 @@ export function GuidesMegaMenu() {
                                     EVERYTHING YOU NEED TO KNOW
                                 </p>
                                 <Link
-                                    href="#"
+                                    href="/products/rs-max-fans"
                                     className="text-yellow-400 font-bold text-xs uppercase tracking-wider hover:text-white transition-colors inline-flex items-center gap-2"
                                 >
                                     LEARN MORE <span>&gt;</span>

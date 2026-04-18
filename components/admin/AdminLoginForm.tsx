@@ -98,7 +98,7 @@ export function AdminLoginForm() {
                                 />
                                 <span className="text-sm text-zinc-400 group-hover:text-zinc-200 transition-colors">Remember Me</span>
                             </label>
-                            <a href="#" className="text-sm text-yellow-400 hover:text-yellow-300 font-medium hovre:underline">Forgot?</a>
+                            <a href="/admin/reset-password" className="text-sm text-yellow-400 hover:text-yellow-300 font-medium hovre:underline">Forgot?</a>
                         </div>
 
                         <button
